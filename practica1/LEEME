@@ -1,0 +1,7 @@
+Pizarro Martinez, Francisco Javier  821259@unizar.es    a821259
+Solán Morote, Jorge                 816259@unizar.es    a816259
+
+cifrado.py contiene toda la lógica de cifrado/descifrado funciones de comprobacion y funciones auxiliares.
+testsCifrado.py contiene todos los test implementados sobre la funcionalidad ofrecida por cifrado.py
+rendimientoCifrado.py empleado para estudiar los rendimientos del sistema.
+ejecutar.sh lanza los test automaticos.
