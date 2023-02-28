@@ -52,7 +52,7 @@ class WrongParametersValuesTest(unittest.TestCase):
     def test_mochilaNoOptima(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,1],7,5),msj,"Error funciona con una mochila inválida")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 2], 1479689, 1422497),msj,"Error funciona con una mochila inválida")
         except ValueError:
             pass
         else:
@@ -70,7 +70,7 @@ class WrongParametersValuesTest(unittest.TestCase):
     def test_wNegativa(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,5],7,-1),msj,"Error funciona con una w negativa")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 370240], 1479689, -1),msj,"Error funciona con una w negativa")
         except ValueError:
             pass
         else:
@@ -79,7 +79,7 @@ class WrongParametersValuesTest(unittest.TestCase):
     def test_wMayorQueN(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,5],7,90),msj,"Error funciona con una w mayor que N")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 370240], 1422497, 1479689),msj,"Error funciona con una w mayor que N")
         except ValueError:
             pass
         else:
@@ -88,7 +88,7 @@ class WrongParametersValuesTest(unittest.TestCase):
     def test_wNoPrimoConN(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,5],7,14),msj,"Error funciona con una w que no es prima respecto a N")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 370240], 1479689, 1479689),msj,"Error funciona con una w que no es prima respecto a N")
         except ValueError:
             pass
         else:
@@ -97,7 +97,7 @@ class WrongParametersValuesTest(unittest.TestCase):
     def test_NnoEsElMayor(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,5],3,14),msj,"Error funciona con una N que no es mas grande que la mochila")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 370240], 2, 1479689),msj,"Error funciona con una N que no es mas grande que la mochila")
         except ValueError:
             pass
         else:
@@ -113,7 +113,7 @@ class WrongParametersTypesTest(unittest.TestCase):
     def test_mensajeNoString(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(0,[1,2,5],7,5),msj,"Error funciona con un mensaje que no es un string")
+            self.assertNotEqual(cifradoYDescifrado(0,[8, 87, 555, 731, 4234, 39685, 370240], 1479689, 1422497),msj,"Error funciona con un mensaje que no es un string")
         except ValueError:
             pass
         else:
@@ -122,7 +122,7 @@ class WrongParametersTypesTest(unittest.TestCase):
     def test_mochilaNoLista(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,'a',7,5),msj,"Error funciona con una mochila que no es una lista")
+            self.assertNotEqual(cifradoYDescifrado(msj,'a', 1479689, 1422497),msj,"Error funciona con una mochila que no es una lista")
         except ValueError:
             pass
         else:
@@ -131,7 +131,7 @@ class WrongParametersTypesTest(unittest.TestCase):
     def test_wNoInt(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,5],'a',5),msj,"Error funciona con un w que no es un int")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 370240],'a',1422497),msj,"Error funciona con un w que no es un int")
         except ValueError:
             pass
         else:
@@ -140,7 +140,7 @@ class WrongParametersTypesTest(unittest.TestCase):
     def test_NNoInt(self):
         msj = "mensaje"
         try:
-            self.assertNotEqual(cifradoYDescifrado(msj,[1,2,5],5,'a'),msj,"Error funciona con un N que no es un int")
+            self.assertNotEqual(cifradoYDescifrado(msj,[8, 87, 555, 731, 4234, 39685, 370240], 1479689,'a'),msj,"Error funciona con un N que no es un int")
         except ValueError:
             pass
         else:

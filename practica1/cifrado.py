@@ -21,6 +21,53 @@ import random
 
 ################################################################################
 #                                                                              #
+#    FUNCIONES MATEMÁTICAS AUXILIARES                                          #
+#                                                                              #
+################################################################################
+
+def _egcd(w: int, N: int) -> tuple:
+    "Algoritmo extendido de Euclides"  
+    if w == 0:
+        return (N, 0, 1)
+    else:
+        g, y, x = _egcd(N % w, w)
+        return (g, x - (N // w) * y, y)
+
+def _calcularInverso(w: int, N: int) -> int:
+    """Calcula el inverso de 'w' mod 'N'
+    
+    Parameters:
+    w(int):Valor intermedio primo respecto a N
+    N(int):Valor máximo calculado previamente
+    
+    Returns:
+    int:El inverso de los dos valores previos
+    """      
+    g, x, y = _egcd(w, N)
+    return x % N
+
+def _mcd(a: int,b: int) -> int:
+    """Devuelve el mínimo común múltiplo de dos números
+    
+    Parameters:
+    a(int)
+    b(int)
+
+    Returns:
+    int:Su valor es el mcd de los valores introducidos
+    """
+    if a > b:
+        pequeño = b
+    else:
+        pequeño = a
+    for i in range(1, pequeño+1):
+        if((a % i == 0) and (b % i == 0)):
+            mcd = i
+    return mcd
+
+
+################################################################################
+#                                                                              #
 #    COMPROBACIONES PREVIAS                                                    #
 #                                                                              #
 ################################################################################
@@ -49,7 +96,11 @@ def _checkN(mochila,N):
 def _checkW(w,N):
     if type(w) is not int:
         raise ValueError
-    if((_mcd(w,N) != 1) or (w < 1) or (w >= N)):
+    if((w < 1) or (_mcd(w,N) != 1)  or (w >= N)):
+        raise ValueError
+
+def _checkMsj(msj):
+    if type(msj) is not str:
         raise ValueError
 
 ################################################################################
@@ -104,51 +155,6 @@ def _clavePublica(mochila: list,N: int,w: int) -> list:
         tupla.append((w*e)%N)
     return tupla
 
-################################################################################
-#                                                                              #
-#    FUNCIONES MATEMÁTICAS AUXILIARES                                          #
-#                                                                              #
-################################################################################
-
-def _egcd(w: int, N: int) -> tuple:
-    "Algoritmo extendido de Euclides"  
-    if w == 0:
-        return (N, 0, 1)
-    else:
-        g, y, x = _egcd(N % w, w)
-        return (g, x - (N // w) * y, y)
-
-def _calcularInverso(w: int, N: int) -> int:
-    """Calcula el inverso de 'w' mod 'N'
-    
-    Parameters:
-    w(int):Valor intermedio primo respecto a N
-    N(int):Valor máximo calculado previamente
-    
-    Returns:
-    int:El inverso de los dos valores previos
-    """      
-    g, x, y = _egcd(w, N)
-    return x % N
-
-def _mcd(a: int,b: int) -> int:
-    """Devuelve el mínimo común múltiplo de dos números
-    
-    Parameters:
-    a(int)
-    b(int)
-
-    Returns:
-    int:Su valor es el mcd de los valores introducidos
-    """
-    if a > b:
-        pequeño = b
-    else:
-        pequeño = a
-    for i in range(1, pequeño+1):
-        if((a % i == 0) and (b % i == 0)):
-            mcd = i
-    return mcd
 
 ################################################################################
 #                                                                              #
@@ -276,6 +282,7 @@ def cifradoYDescifrado(mensaje: str, mochila: list,N: int,w: int) -> str:
     posteriormente, descodificarlo con sus respectivas claves públicas y privadas
     """  
     #checks previos de los valores de los datos de entrada
+    _checkMsj(mensaje)
     _checkMochila(mochila)
     _checkN(mochila,N)
     _checkW(w,N)
@@ -298,4 +305,5 @@ def cifradoYDescifrado(mensaje: str, mochila: list,N: int,w: int) -> str:
 if __name__ == "__main__":
     msj = "mensajeSimple"
     datos = generarDatosInicio(7)
-    print(cifradoYDescifrado(msj,datos[0],datos[1],datos[2]))
+    print(datos)
+    # print(cifradoYDescifrado(msj,datos[0],datos[1],datos[2]))
