@@ -10,7 +10,7 @@ main :: IO ()
 main = do
   args <- getArgs
   start <- getCPUTime
-  let resultado = simulameEsta (read (head args) :: Integer) (read (args !! 1) :: Integer) Empty
+  let resultado = simulamelaDirecta (read (head args) :: Integer) (read (args !! 1) :: Integer)
   end <- getCPUTime
   print resultado
   let time = fromIntegral (end - start) / (10^9) * 1000 -- seconds to milliseconds
