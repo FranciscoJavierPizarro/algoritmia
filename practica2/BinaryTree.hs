@@ -42,3 +42,22 @@ simulamelaDirecta x y
     -- Cuando la bola menos 1 es un número cuadrado de 2
     | otherwise                                             = aiudaPuto x y 0
     -- En cualqiuier otro caso
+
+
+
+
+
+simulameEstaOptimizada :: Integer -> Integer -> Tree Integer -> Integer
+simulameEstaOptimizada 1 _ (Branch valor) = valor
+simulameEstaOptimizada p n (Branch valor) = simulameEstaOptimizada p' n' subarbol where
+    p' = p - 1
+    valorMod = (n .&. 1) == 1
+    n' =  ((n `shiftR` 1) :: Integer) + (if valorMod then 1 else 0) 
+    valorSiguienteNodo = if not valorMod then 2*valor+1 else 2*valor where
+    subarbol = Branch valorSiguienteNodo
+simulameEstaOptimizada p n _ = simulameEstaOptimizada p' n' subarbol where
+    p' = p - 1
+    valorMod = (n .&. 1) == 1
+    n' = ((n `shiftR` 1) :: Integer) + (if valorMod then 1 else 0) 
+    valorSiguienteNodo = if not valorMod then 3 else 2 where
+    subarbol = Branch valorSiguienteNodo
