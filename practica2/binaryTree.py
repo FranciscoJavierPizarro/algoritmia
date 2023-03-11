@@ -53,5 +53,5 @@ def simularNBolas(raiz,n):
     return valorUltimaHojaRecorrida
         
 if __name__ == "__main__":
-    raiz = generateTree(20)
-    simularNBolas(raiz,4)
+    raiz = generateTree(7)
+    print(simularNBolas(raiz,11))

@@ -2,8 +2,6 @@ module BinaryTree where
 import Data.List
 import Data.Sequence
 import Data.Bits
--- import Math.NumberTheory.Logarithms
-
 
 data Tree a = Branch a | Empty
 
@@ -41,28 +39,3 @@ simulacionDirecta x y
     -- Cuando la bola menos 1 es un número cuadrado de 2
     | otherwise                                             = simulacionDirecta x ( y - ((2 :: Integer) `shiftL` ((fromIntegral (round (logBase 2 (fromIntegral y)))) - 2))) + ((2 :: Integer) `shiftL` (fromInteger(x - 2 - (fromIntegral (round (logBase 2 (fromIntegral y)))))))
     -- En cualqiuier otro caso
-
--- simulacionOptimizada :: Integer -> Integer -> Tree Integer -> Integer
--- simulacionOptimizada 1 _ (Branch valor) = valor
--- simulacionOptimizada p n (Branch valor) = simulacionOptimizada p' n' subarbol where
---     p' = p - 1
---     valorMod = (n .&. 1) == 1
---     n' =  ((n `shiftR` 1) :: Integer) + (if valorMod then 1 else 0) 
---     valorSiguienteNodo = if not valorMod then 2*valor+1 else 2*valor where
---     subarbol = Branch valorSiguienteNodo
--- simulacionOptimizada p n _ = simulacionOptimizada p' n' subarbol where
---     p' = p - 1
---     valorMod = (n .&. 1) == 1
---     n' = ((n `shiftR` 1) :: Integer) + (if valorMod then 1 else 0) 
---     valorSiguienteNodo = if not valorMod then 3 else 2 where
---     subarbol = Branch valorSiguienteNodo
-
-
-
--- toBinarySeq :: Integer -> Seq Bool
--- toBinarySeq 0 = singleton False
--- toBinarySeq n = Data.Sequence.reverse $ fromList $ map (testBit n) [0..(numBits - 1)]
---   where numBits = finiteBitSize n
-  
--- bitLength :: Integral a => a -> Int
--- bitLength n = integerLog2 (fromIntegral n)
