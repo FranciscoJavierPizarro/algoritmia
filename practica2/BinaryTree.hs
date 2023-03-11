@@ -27,7 +27,7 @@ simulacionDirecta x 1 = ((2 :: Integer) `shiftL` (fromInteger (x-2)))
 simulacionDirecta x y
     | y >= ((2 :: Integer) `shiftL` (fromInteger (x-2)))    = simulacionDirecta x ( y `mod` ((2 :: Integer) `shiftL` (fromInteger (x-2))) )
     -- Cuando hay más bolas de las que caben en el árbol
-    | y .&. (y-1) == 0                                      = ((2 :: Integer) `shiftL` (fromInteger (x-1))) - ((2 :: Integer) `shiftL` (fromInteger (x-2-(fromIntegral (round (logBase 2 (fromIntegral y)))))))
+    | y .&. (y-1) == 0                                      = ((2 :: Integer) `shiftL` (fromInteger (x-1))) - ((2 :: Integer) `shiftL` (fromInteger (x-2-(fromIntegral (floor (logBase 2 (fromIntegral y)))))))
     -- Cuando la bola es un número cuadrado de 2
     | (y+1) .&. y == 0                                      = simulacionDirecta x (y+1) - ((2 :: Integer) `shiftL` (fromInteger (x-3)))
     -- Cuando la bola más 1 es un número cuadrado de 2
@@ -35,7 +35,7 @@ simulacionDirecta x y
     -- Cuando la bola pasa de la mitad del número de hojas del árbol
     | y `mod` 2 == 0                                        = simulacionDirecta x ( y-1 ) + ((2 :: Integer) `shiftL` (fromInteger (x-3)))
     -- Cuando la bola es un número par
-    | (y-1) .&. (y-2) == 0                                  = simulacionDirecta x 1 + ((2 :: Integer) `shiftL` (fromInteger (x-3-(fromIntegral (round (logBase 2 (fromIntegral (y-1))))))))
+    | (y-1) .&. (y-2) == 0                                  = simulacionDirecta x 1 + ((2 :: Integer) `shiftL` (fromInteger (x-3-(fromIntegral (floor (logBase 2 (fromIntegral (y-1))))))))
     -- Cuando la bola menos 1 es un número cuadrado de 2
-    | otherwise                                             = simulacionDirecta x ( y - ((2 :: Integer) `shiftL` ((fromIntegral (round (logBase 2 (fromIntegral y)))) - 2))) + ((2 :: Integer) `shiftL` (fromInteger(x - 2 - (fromIntegral (round (logBase 2 (fromIntegral y)))))))
+    | otherwise                                             = simulamelaDirecta x (y - (2 :: Integer) `shiftL`(fromIntegral (floor (logBase 2 (fromIntegral y)))-1)) + ((2 :: Integer) `shiftL` (fromInteger(x - 3 - (fromIntegral (floor (logBase 2 (fromIntegral y)))))))
     -- En cualqiuier otro caso
