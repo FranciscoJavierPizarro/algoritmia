@@ -2,3 +2,11 @@ Pizarro Martinez, Francisco Javier  821259@unizar.es    a821259
 Solán Morote, Jorge                 816259@unizar.es    a816259
 
 ejecutar.sh lanza los test automaticos.
+borrar.sh borra todos los archivos generados.
+binaryTree.py contiene la implementación del primer algoritmo en Python.
+BinaryTree.hs contiene la implementación de los algoritmos 2 y 3 en haskell.
+simulation.hs contiene una interfaz en haskell para llamar a los algoritmos 2 y 3 además de cronometrarlos.
+rendimiento.py contiene las distintas pruebas de rendimiento ejecutadas.
+/rendimientos/*.plot fichero empleado por gnuplot para visualizar las gráficas mostradas en la memoria
+pinball.py core del programa es una interfaz en Python para llamar a los distintos algoritmos implementados y resolver el fichero introducido como 1º argumento guardando resultados en el 2º argumento
+pruebas.txt fichero de pruebas
