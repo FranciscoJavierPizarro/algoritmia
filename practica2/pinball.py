@@ -1,4 +1,18 @@
 #!/usr/bin/python3
+
+################################################################################
+#                                                                              #
+#     Archivo: pinball.py                                                      #
+#     Fecha de última revisión: 14/03/2023                                     #
+#     Autores: Francisco Javier Pizarro 821259                                 #
+#              Jorge Solán Morote   	816259                                 #
+#     Comms:                                                                   #
+#           Este archivo es el core del programa de simulación de la           #
+#           práctica 2 de algoritmia básica.                                   #
+#                                                                              #
+################################################################################
+
+
 import sys
 from binaryTree import *
 if __name__ == "__main__":
@@ -9,8 +23,7 @@ if __name__ == "__main__":
         with open(ficheroPruebas) as fPruebas, open(ficheroSoluciones, "w") as fSoluciones: 
             for prueba in fPruebas:
                 [profundidad, n] = prueba.split()
-                raiz = generateTree(int(profundidad))
-                fSoluciones.write(str(simularNBolas(raiz,int(n))))
+                fSoluciones.write(str(lanzarSimulacion(int(profundidad),int(n))))
 
 
     

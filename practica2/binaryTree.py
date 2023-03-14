@@ -1,3 +1,20 @@
+################################################################################
+#                                                                              #
+#     Archivo: binaryTree.py                                                   #
+#     Fecha de última revisión: 14/03/2023                                     #
+#     Autores: Francisco Javier Pizarro 821259                                 #
+#              Jorge Solán Morote   	816259                                 #
+#     Comms:                                                                   #
+#           Este archivo contiene el TAD nodo sobre el cual implementa el      #
+#           árbol binario de la práctica 2 de algoritmia básica.               #
+#           El módulo contiene también las funciones necesarias para crear un  #
+#           árbol binario de profundidad P, así como el código necesario para  #
+#           simular el lanzamiento de N bolas a lo largo de un arbol dado      #
+#                                                                              #
+################################################################################
+
+
+
 maxNode = 1
 class Node:
     def __init__(self):
