@@ -14,7 +14,7 @@ class Node:
     def insertRight(self):
         self.right = Node()
 
-def generateTree(profundidad):
+def _generateTree(profundidad):
     raiz = Node()
     profundidad -= 1
     pendientesDeGenerarSubnodos = []
@@ -37,7 +37,7 @@ def generateTree(profundidad):
     
     return raiz
 
-def simularBola(raiz):
+def _simularBola(raiz):
     nodo = raiz
     while nodo.left != None or nodo.right != None:
         nodo.data = not nodo.data
@@ -47,11 +47,13 @@ def simularBola(raiz):
             nodo = nodo.right
     return nodo.nodeId
 
-def simularNBolas(raiz,n):
+def _simularNBolas(raiz,n):
     for i in range(n):
-        valorUltimaHojaRecorrida = simularBola(raiz)
+        valorUltimaHojaRecorrida = _simularBola(raiz)
     return valorUltimaHojaRecorrida
-        
+
+def lanzarSimulacion(P,N):
+    return _simularNBolas(_generateTree(P),N)
+
 if __name__ == "__main__":
-    raiz = generateTree(7)
-    print(simularNBolas(raiz,11))
+    lanzarSimulacion(7,1)

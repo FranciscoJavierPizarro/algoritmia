@@ -37,5 +37,5 @@ simulacionDirecta x y
     -- Cuando la bola es un número par
     | (y-1) .&. (y-2) == 0                                  = simulacionDirecta x 1 + ((2 :: Integer) `shiftL` (fromInteger (x-3-(fromIntegral (floor (logBase 2 (fromIntegral (y-1))))))))
     -- Cuando la bola menos 1 es un número cuadrado de 2
-    | otherwise                                             = simulamelaDirecta x (y - (2 :: Integer) `shiftL`(fromIntegral (floor (logBase 2 (fromIntegral y)))-1)) + ((2 :: Integer) `shiftL` (fromInteger(x - 3 - (fromIntegral (floor (logBase 2 (fromIntegral y)))))))
+    | otherwise                                             = simulacionDirecta x (y - (2 :: Integer) `shiftL`(fromIntegral (floor (logBase 2 (fromIntegral y)))-1)) + ((2 :: Integer) `shiftL` (fromInteger(x - 3 - (fromIntegral (floor (logBase 2 (fromIntegral y)))))))
     -- En cualqiuier otro caso
