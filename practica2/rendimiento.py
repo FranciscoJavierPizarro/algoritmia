@@ -72,6 +72,9 @@ def _performanceTest2AlgsBalls():
             fhsD.write("10^"+str (N) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
 if __name__ == "__main__":
+    print("Ejecutando métricas rendimiento de los 3 algoritmos para N = 100 y P € [1-25]")
     _performanceTest3Algs()
+    print("Ejecutando métricas rendimiento para N = 1000000 y P € [10^1-10^7] para los algoritmos hechos en Haskell")
     _performanceTest2AlgsProf()
+    print("Ejecutando métricas rendimiento para P = 1000000 y N € [10^1-10^8] para los algoritmos hechos en Haskell")
     _performanceTest2AlgsBalls()

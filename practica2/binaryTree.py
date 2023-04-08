@@ -86,7 +86,7 @@ def _simularBola(raiz):
     int:Valor del nodo por el que sale la bola
     """   
     nodo = raiz
-    while nodo.left != None or nodo.right != None:
+    while nodo.left != None and nodo.right != None:
         nodo.data = not nodo.data
         if nodo.data:
             nodo = nodo.left
@@ -120,7 +120,9 @@ def lanzarSimulacion(P,N):
     Returns:
     int:Valor del nodo por el que sale la última bola
     """ 
+    global maxNode
+    maxNode = 1 ##MUY IMPORTANTE RESETEAR ESTO EN LA EJECUCIÓN EN BUCLE
     return _simularNBolas(_generateTree(P),N)
 
 if __name__ == "__main__":
-    lanzarSimulacion(25,1)
+    print(lanzarSimulacion(3,2))

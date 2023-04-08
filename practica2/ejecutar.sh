@@ -6,8 +6,10 @@ ghc -O2 simulation.hs
 mkdir ./tmp
 mkdir ./outputs
 mv ./*.{hi,o} ./tmp
-echo "Lanzando test automatizados para comprobar el funcionamiento de pinball.py"
 echo "Empleando version de python: $(python3 --version)"
-
+echo "Lanzando tests automatizados para comprobar el funcionamiento de pinball"
 ./test.sh
-# python3 testsPinball.py -v
+echo "Lanzando tests de rendimiento"
+python3 rendimiento.py
+echo "Lanzando tests de excepciones"
+python3 testsPinball.py -v
