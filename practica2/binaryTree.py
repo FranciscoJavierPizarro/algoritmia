@@ -104,8 +104,10 @@ def _simularNBolas(raiz,n):
     Returns:
     int:Valor del nodo por el que sale la última bola
     """ 
+    # valorUltimaHojaRecorrida = 1
     for i in range(n):
         valorUltimaHojaRecorrida = _simularBola(raiz)
+
     return valorUltimaHojaRecorrida
 
 def lanzarSimulacion(P,N):

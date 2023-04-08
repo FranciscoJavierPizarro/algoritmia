@@ -45,4 +45,5 @@ main = do
 
   --mostramos los resultados deseados
   --printf "resultado recorrido:%i\n" resultado
-  printf "%0.9f" diff --tiempo en MS
+  printf "%0.9f " diff --tiempo en MS
+  print resultado
