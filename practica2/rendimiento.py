@@ -39,10 +39,10 @@ def _performanceTest3Algs():
             end = time.time()
             fpy.write(str (P) + " " + str((end - start) * 1000)+ "\n")# iteracion tiempoEnMs
             
-            hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout 
+            hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0] 
             fhsS.write(str (P) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
-            hstime = subprocess.run(comando, stdout=subprocess.PIPE, shell=True, text=True).stdout
+            hstime = subprocess.run(comando, stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0]
             fhsD.write(str (P) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
 def _performanceTest2AlgsProf():
@@ -52,10 +52,10 @@ def _performanceTest2AlgsProf():
         for P in range(1,7):
             comando = "./simulation " + str(10**P) + " " + str(N)
             
-            hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout 
+            hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0] 
             fhsS.write("10^"+str (P) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
-            hstime = subprocess.run(comando, stdout=subprocess.PIPE, shell=True, text=True).stdout
+            hstime = subprocess.run(comando, stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0]
             fhsD.write("10^"+str (P) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
 def _performanceTest2AlgsBalls():
@@ -65,10 +65,10 @@ def _performanceTest2AlgsBalls():
         for N in range(1,8):
             comando = "./simulation " + str(P) + " " + str(10**N)
             
-            hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout 
+            hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0] 
             fhsS.write("10^"+str (N) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
-            hstime = subprocess.run(comando, stdout=subprocess.PIPE, shell=True, text=True).stdout
+            hstime = subprocess.run(comando, stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0]
             fhsD.write("10^"+str (N) + " " + hstime+ "\n")# iteracion tiempoEnMs
 
 if __name__ == "__main__":
