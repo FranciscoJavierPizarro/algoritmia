@@ -1,10 +1,12 @@
 package main
 
 import "fmt"
+import (
+    "bufio"
+    "os"
+)
 
-//(👉ﾟヮﾟ)👉
-
-func buscarCadena(dic map[string]int, cadenaBuscada string, n int, encontrados []string, pseudomatrix [][]string, alreadyCalculated int) bool {
+func buscarCadena(dic map[string]bool, cadenaBuscada string, n int, encontrados []string, pseudomatrix [][]string, alreadyCalculated int) bool {
 	if cadenaBuscada == "" {fmt.Println(encontrados); return true}
 	if n > len(cadenaBuscada) {return false}
 	if n == 1 && len(pseudomatrix[alreadyCalculated]) != 0 {
@@ -29,24 +31,25 @@ func buscarCadena(dic map[string]int, cadenaBuscada string, n int, encontrados [
 }
 
 func main() {
-	/***************************************************************************
-						Definición del diccionario
-	/**************************************************************************/
-	dic := make(map[string]int)
-	dic["me"] = 0
-	dic["gusta"] = 1
-	dic["megusta"] = 2
-	dic["sol"] = 3
-	dic["dar"] = 4
-	dic["soldar"] = 5
-	dic["la"] = 6
-	dic["patata"] = 7
-	dic["pata"] = 9
-	dic["ta"] = 10
-	dic["pa"] = 11
-	dic[" "]= 8
-	/******************************(。﹏。*)************************************/
-	cadenaObjetivo := "megustasoldarlapatata"
+    file, err := os.Open(os.Args[1])
+    if err != nil {
+        fmt.Printf("Error opening file: %v\n", err)
+        os.Exit(1)
+    }
+    defer file.Close()
+
+    scanner := bufio.NewScanner(file)
+    scanner.Scan()
+    cadenaObjetivo := scanner.Text()
+
+    dic := make(map[string]bool)
+    for scanner.Scan() {
+        dic[scanner.Text()] = true
+    }
+    if err := scanner.Err(); err != nil {
+        fmt.Printf("Error reading file: %v\n", err)
+        os.Exit(1)
+    }
 	
 	pseudomatrix := make([][]string, len(cadenaObjetivo) + 1)
 	for i := range pseudomatrix {
