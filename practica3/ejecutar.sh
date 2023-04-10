@@ -11,4 +11,5 @@ for i in {1..3}; do
     echo "Ejecutando para ${n} palabras"
     python3 generarEntrada.py ${n}
     ./main ./tmp/f${n}.txt
+    ./main ./tmp/fMod${n}.txt
 done
