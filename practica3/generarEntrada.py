@@ -12,7 +12,7 @@ while len(compound_words) < num_words*75//1000:
 
 all_words = basic_words.union(compound_words)
 
-first_line = ''.join(random.sample(list(all_words), random.randint(num_words//100, num_words//10)))
+first_line = ''.join(random.sample(list(all_words), random.randint(num_words//100 + 1, num_words//10)))
 
 with open('./tmp/f' + sys.argv[1] + '.txt', 'w') as f:
     f.write(first_line + '\n')
