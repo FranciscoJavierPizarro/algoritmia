@@ -9,6 +9,29 @@ import (
 
 var ahorroPD int = 0
 
+func searchWords(cadenaBuscada string, dic map[string]bool, precalcMatrix [][]string) {
+    ch := make(chan []string)
+    for i := 0; i < len(cadenaBuscada); i++ {
+        go func(start int) {
+            var encontradas []string
+            for j := start; j < len(cadenaBuscada); j++ {
+                prefix := cadenaBuscada[start : j+1]
+                if dic[prefix] {
+                    encontradas = append(encontradas, prefix)
+                }
+            }
+            // Send the results to the channel
+            ch <- encontradas
+        }(i)
+    }
+
+    // Collect the results from the channel and store them in the matrix
+    for i := 0; i < len(cadenaBuscada); i++ {
+        precalcMatrix[i] = <-ch
+    }
+}
+
+
 func buscarCadenaPD(dic map[string]bool, cadenaBuscada string, n int, encontrados []string, pseudomatrix [][]string, alreadyCalculated int) bool {
 	if cadenaBuscada == "" {
 		// fmt.Println(encontrados);
@@ -87,6 +110,10 @@ func main() {
 	for i := range pseudomatrix {
 		pseudomatrix[i] = make([]string, 0)
 	}
+
+	precalcMatrix := make([][]string, len(sentence))
+    searchWords(cadenaObjetivo, dic, precalcMatrix)
+
 	start := time.Now()
 if buscarCadenaPD(dic, cadenaObjetivo, 1, make([]string, 0), pseudomatrix, 0) {
     fmt.Println("Sí.")
