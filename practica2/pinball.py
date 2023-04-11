@@ -29,9 +29,9 @@ def ejecutarPrueba(prueba,algoritmo,debug):
     if type(int(profundidad)) is not int or type(int(n)) is not int or int(profundidad) < 1 or int(n) < 1:
         raise ValueError
     if algoritmo == 0:
-        resultado = subprocess.run(CMD + str(profundidad) + " " + str(n) + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout
+        resultado = subprocess.run(CMD + str(profundidad) + " " + str(n) + " 0", stdout=subprocess.PIPE, shell=True, universal_newlines=True).stdout
     elif algoritmo == 1:
-        resultado = subprocess.run(CMD + str(profundidad) + " " + str(n), stdout=subprocess.PIPE, shell=True, text=True).stdout
+        resultado = subprocess.run(CMD + str(profundidad) + " " + str(n), stdout=subprocess.PIPE, shell=True, universal_newlines=True).stdout
     elif algoritmo == 2:
         start = time.time()
         resultado = str(lanzarSimulacion(int(profundidad),int(n))) +"\n"
