@@ -1,0 +1,8 @@
+Pizarro Martinez, Francisco Javier  821259@unizar.es    a821259
+Solán Morote, Jorge                 816259@unizar.es    a816259
+
+ejecutar.sh lanza el programa.
+borrar.sh borra todos los archivos generados.
+/rendimientos/*.plot fichero empleado por gnuplot para visualizar las gráficas mostradas en la memoria.
+generarEntrada.py genera los ficheros de entrada usados por el programa.
+main.go core del programa.
