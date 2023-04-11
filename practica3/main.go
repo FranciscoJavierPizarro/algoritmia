@@ -8,9 +8,12 @@ import (
 )
 
 func searchWords(cadenaBuscada string, dic map[string]bool, precalcMatrix [][]string) {
-    ch := make(chan []string)
+    chs := make([]chan []string, len(cadenaBuscada))
+    for i := range chs {
+        chs[i] = make(chan []string)
+    }
     for i := 0; i < len(cadenaBuscada); i++ {
-        go func(start int) {
+        go func(start int,ch chan<- []string) {
             var encontradas []string
             for j := start; j < len(cadenaBuscada); j++ {
                 prefix := cadenaBuscada[start : j+1]
@@ -18,38 +21,22 @@ func searchWords(cadenaBuscada string, dic map[string]bool, precalcMatrix [][]st
                     encontradas = append(encontradas, prefix)
                 }
             }
-            // Send the results to the channel
             ch <- encontradas
-        }(i)
+        }(i, chs[i])
     }
 
-    // Collect the results from the channel and store them in the matrix
-    for i := 0; i < len(cadenaBuscada); i++ {
+    for i, ch := range chs {
         precalcMatrix[i] = <-ch
     }
 }
 
-func printCombinations(cadenaBuscada string, precalcMatrix [][]string) bool {
-    var totalCombinations int = 1
-    for i := 0; i < len(precalcMatrix); i++ {
-        totalCombinations *= len(precalcMatrix[i])
-    }
+func buscarPDPrecalc(cadenaBuscada string, precalcMatrix [][]string,alreadyCalculated int, combination string) bool {
+    if cadenaBuscada == "" {
+        return true}
     hasCombination := false
-    for i := 0; i < totalCombinations; i++ {
-        var combination string
-        var index int = i
-        for j := 0; j < len(precalcMatrix); j++ {
-            wordIndex := index % len(precalcMatrix[j])
-            combination += precalcMatrix[j][wordIndex] + " "
-            index /= len(precalcMatrix[j])
-        }
-        combination = combination[:len(combination)-1]
-        if combination == cadenaBuscada {
-			fmt.Println(combination)
-            hasCombination = true
-        }
+    for _, element := range precalcMatrix[alreadyCalculated] {
+        hasCombination = hasCombination || buscarPDPrecalc(cadenaBuscada[len(element):], precalcMatrix ,alreadyCalculated+(len(element)),combination + " " + element)
     }
-
     return hasCombination
 }
 
@@ -108,23 +95,29 @@ func main() {
 		pseudomatrix[i] = make([]string, 0)
 	}
 	
-	start := time.Now()
-	precalcMatrix := make([][]string, len(cadenaObjetivo))
-    searchWords(cadenaObjetivo, dic, precalcMatrix)
-	if printCombinations(cadenaObjetivo,precalcMatrix) {
-		fmt.Print("Sí. ")
-	} else {
-		fmt.Print("No. ")
-	}
-	elapsed := time.Since(start)
-	fmt.Printf("Tiempo de ejecución de buscarCadenaPDPrecalc: %s\n", elapsed)
+    if ("0" != os.Args[2]) {
+        // fmt.Fprintln(os.Stderr, "Algoritmo de precalc")
+        start := time.Now()
+        precalcMatrix := make([][]string, len(cadenaObjetivo))
+        searchWords(cadenaObjetivo, dic, precalcMatrix)
+        if buscarPDPrecalc(cadenaObjetivo,precalcMatrix,0,"") {
+            fmt.Print("Sí. ")
+        } else {
+            fmt.Print("No. ")
+        }
+        elapsed := time.Since(start)
+        fmt.Printf("%d\n", elapsed.Microseconds())
+    } else {
+        // fmt.Fprintln(os.Stderr, "Algoritmo de onfly")
+        start := time.Now()
+        if buscarCadenaPD(dic, cadenaObjetivo, 1, make([]string, 0), pseudomatrix, 0) {
+            fmt.Print("Sí. ")
+        } else {
+            fmt.Print("No. ")
+        }
+        elapsed := time.Since(start)
+        fmt.Printf("%d\n", elapsed.Microseconds())
+    }
 
-	start = time.Now()
-	if buscarCadenaPD(dic, cadenaObjetivo, 1, make([]string, 0), pseudomatrix, 0) {
-		fmt.Print("Sí. ")
-	} else {
-		fmt.Print("No. ")
-	}
-	elapsed = time.Since(start)
-	fmt.Printf("Tiempo de ejecución de buscarCadenaPD: %s\n", elapsed)
+
 }
