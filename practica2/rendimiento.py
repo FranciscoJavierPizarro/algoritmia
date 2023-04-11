@@ -29,9 +29,9 @@ import subprocess
 
 def _performanceTest3Algs():
     """Compara el coste temporal para N = 100 y P € [1-25] para los tres algoritmos""" 
-    N = 100
+    N = 20
     with open("rendimientos/rendimientoPyth.txt", "w") as fpy,open("rendimientos/rendimientoHaskSimulado.txt", "w") as fhsS,open("rendimientos/rendimientoHaskDirecto.txt", "w") as fhsD: 
-        for P in range(2,25):
+        for P in range(2,15):
             comando = "./simulation " + str(P) + " " + str(N)
             
             start = time.time()
@@ -47,9 +47,9 @@ def _performanceTest3Algs():
 
 def _performanceTest2AlgsProf():
     """Compara el coste temporal para N = 1000000 y P € [10^1-10^7] para los algoritmos hechos en Haskell""" 
-    N = 1000000
+    N = 10000
     with open("rendimientos/rendimientoProfHaskSimulado.txt", "w") as fhsS,open("rendimientos/rendimientoProfHaskDirecto.txt", "w") as fhsD: 
-        for P in range(1,7):
+        for P in range(1,6):
             comando = "./simulation " + str(10**P) + " " + str(N)
             
             hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0] 
@@ -60,9 +60,9 @@ def _performanceTest2AlgsProf():
 
 def _performanceTest2AlgsBalls():
     """Compara el coste temporal para P = 1000000 y N € [10^1-10^8] para los algoritmos hechos en Haskell""" 
-    P = 1000000
+    P = 100000
     with open("rendimientos/rendimientoBallsHaskSimulado.txt", "w") as fhsS,open("rendimientos/rendimientoBallsHaskDirecto.txt", "w") as fhsD: 
-        for N in range(1,8):
+        for N in range(1,6):
             comando = "./simulation " + str(P) + " " + str(10**N)
             
             hstime = subprocess.run(comando + " 0", stdout=subprocess.PIPE, shell=True, text=True).stdout.split()[0] 
