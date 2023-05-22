@@ -83,9 +83,13 @@ def solve_problem_instance(enunciado, pedidosEnunciado):
    
     return max_income, runtime
 
+if len(sys.argv) > 2:
+    SIZE = sys.argv[2]
+else:
+    SIZE = ""
 
 enunciados, pedidosEnunciados = cargar_datos(sys.argv[1])
-with open("outputLinear.txt", 'w') as f:
+with open("outputLinear"+SIZE+".txt", 'w') as f:
     for i in range(len(enunciados)):
         max_income, runtime = solve_problem_instance(enunciados[i],pedidosEnunciados[i])
         f.write(f"{max_income} {runtime}\n")
