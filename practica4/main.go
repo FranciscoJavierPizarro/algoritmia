@@ -152,7 +152,7 @@ func main() {
 		aux += 1
 	}
 
-	f, err := os.Create("output.txt")
+	f, err := os.Create("outputRamif.txt")
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
 		os.Exit(1)
