@@ -6,7 +6,7 @@ echo "Ejecutando pruebas estandar"
 ./main input.txt 
 python3 main.py input.txt &> /dev/null
 
-for size in {10,25,50,75,85}; do
+for size in {10,25,50,75,100}; do
     echo "Ejecutando pruebas custom de tamaño ${size}"
     ./main tests/input${size}.txt ${size}
     python3 main.py tests/input${size}.txt ${size} &> /dev/null
