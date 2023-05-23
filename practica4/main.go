@@ -1,3 +1,26 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//     Archivo: main.go                                                       //
+//     Fecha de última revisión: 23/05/2023                                   //
+//     Autores: Francisco Javier Pizarro 821259                               //
+//              Jorge Solán Morote   	816259                                //
+//     Comms:                                                                 //
+//           Este archivo contiene el core de la práctica 4 de algoritmia     //
+//           básica, se encarga de usar programación con ramificación y poda  //
+//           Los parametros son un fichero e información como un número para  //
+//			 el fichero de salida											  //
+//     Use:  																  //
+//			go run main.go input.txt 10										  //
+//			Lanzar el script ejecutar.sh                                      //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//    IMPORTS Y TADS	                                                      //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
 package main
 
 import (
@@ -16,6 +39,12 @@ type Pedido struct {
 	EndPos      int
 	TicketValue int
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//    FUNCIONES DE BÚSQUEDA CON RAMIFICACIÓN Y PODA                           //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 // Pedidos contiene todos los pedidos restantes
 // Capacidad disp contiene la capacidad total (capacidad * m) menos la capacidad real usada(suma del vector)
@@ -119,6 +148,12 @@ func solveProblemInstance(enunciado string, pedidosEnunciado []string) (int, flo
 	elapsed := float64(time.Since(start).Nanoseconds()) / 1000000.0
 	return bestSol, elapsed
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//    CORE DEL PROGRAMA                                                       //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 func main() {
 	//Apertura del fichero de datos

@@ -1,7 +1,34 @@
+################################################################################
+#                                                                              #
+#     Archivo: main.py                                                         #
+#     Fecha de última revisión: 23/05/2023                                     #
+#     Autores: Francisco Javier Pizarro 821259                                 #
+#              Jorge Solán Morote   	816259                                 #
+#     Comms:                                                                   #
+#           Este archivo contiene la implementación del algoritmo de           #
+#           programación lineal que resuelve el problema, los parámetros       #
+#           de invocación son el fichero de entrada y el mensaje que queramos  #
+#           añadir al fichero de salida(por ejemplo el tamaño)                 #
+#     Use:  python3 main.py input.txt 10                                       #
+#                                                                              #
+################################################################################
+
+################################################################################
+#                                                                              #
+#    IMPORTS                                                                   #
+#                                                                              #
+################################################################################
+
 from mip import Model, xsum, maximize, BINARY
 import os
 import sys
 import time
+
+################################################################################
+#                                                                              #
+#    FUNCIÓN AUXILIAR CARGA DE DATOS                                           #
+#                                                                              #
+################################################################################
 
 def cargar_datos(filename):
     enunciados = []
@@ -23,6 +50,12 @@ def cargar_datos(filename):
             pedidosEnunciados.append(pedidos)
 
     return enunciados, pedidosEnunciados
+
+################################################################################
+#                                                                              #
+#    FUNCIONES CORE LINEAR PROGRAMMING                                         #
+#                                                                              #
+################################################################################
 
 def solve_problem(capacidad, m, p, pedidos):
     # Creación modelo, variables booleanas que representan sin un pedido se ha recogido o no
@@ -82,6 +115,12 @@ def solve_problem_instance(enunciado, pedidosEnunciado):
     # print(f"Runtime: {runtime} ms")
    
     return max_income, runtime
+
+################################################################################
+#                                                                              #
+#    CORE DEL PROGRAMA                                                         #
+#                                                                              #
+################################################################################
 
 if len(sys.argv) > 2:
     SIZE = sys.argv[2]
