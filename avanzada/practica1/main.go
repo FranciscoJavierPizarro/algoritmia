@@ -1,6 +1,6 @@
 package main
 
-// go build main.go auxiliar_funcs.go  sorting_algoritms.goC
+// go build main.go auxiliar_funcs.go  sorting_algoritms.go
 // go run *.go
 import (
 	"fmt"
@@ -13,16 +13,17 @@ func main() {
 	// vector := IntVector{1, 2, 3, 4, 5}
 
 	// Define an array of functors.
-	functions := []IntVectorFunc{RadixSort, QuickSort, ConcurrentQuickSort, ConcurrentBogoSort, MergeSort, ConcurrentMergeSort, BubbleSort, HeapSort, CubeSort, TreeSort}
+	// functions := []IntVectorFunc{RadixSort, QuickSort, ConcurrentQuickSort, ConcurrentBogoSort, MergeSort, ConcurrentMergeSort, BubbleSort, HeapSort, CubeSort, TreeSort}
+	// functions := []IntVectorFunc{QuickSort}
 	for _, vector := range vectors {
 		for _, function := range functions {
 			// Measure execution time.
+			fmt.Printf("Function: %s\n", FunctionName(function))
 			start := time.Now()
 			function(vector)
 			duration := time.Since(start)
 
 			// Print the result and execution time.
-			fmt.Printf("Function: %s\n", FunctionName(function))
 			fmt.Printf("Execution Time: %s\n", duration)
 			fmt.Println()
 		}

@@ -48,3 +48,78 @@ func ReadVectorsFromFile(fileName string) [][]int {
 
 	return vectors
 }
+
+func filterGreaterThan(value int, vec []int) []int {
+    var result []int
+    for _, element := range vec {
+        if element > value {
+            result = append(result, element)
+        }
+    }
+    return result
+}
+
+func filterLowerOrEqualThan(value int, vec []int) []int {
+    var result []int
+    for _, element := range vec {
+        if element <= value {
+            result = append(result, element)
+        }
+    }
+    return result
+}
+
+func countingSort( ints IntVector, size int, place int) {
+	max := 10
+	count := ints[0]
+	output := ints[0]
+
+	// Calculate count of elements
+	for  i := 0; i < size; i++ {
+		count[(ints[i] / place) % 10]++;
+	}
+
+	// Calculate cumulative count
+	for  i := 0; i < max; i++ {
+		count[i] += count[i - 1];
+	}
+
+	// Place the elements in sorted order
+	for i := size - 1; i >= 0; i-- {
+		output[count[(ints[i] / place) % 10] - 1] = ints[i];
+		count[(ints[i] / place) % 10]--;
+	}
+
+	for i := 0; i < size; i++{
+		ints[i] = output[i];
+	}
+	
+}
+
+func getMax(ints IntVector, n int) int {
+ 	max := ints[0]
+ 	for i := 1; i < n; i++ {
+ 	  	if ints[i] > max {
+ 			max = ints[i]
+		}
+ 	}
+	return max;
+}
+
+func concatMultipleSlices(slices []IntVector) IntVector {
+	var totalLen int
+
+	for _, s := range slices {
+		totalLen += len(s)
+	}
+
+	result := make(IntVector, totalLen)
+
+	var i int
+
+	for _, s := range slices {
+		i += copy(result[i:], s)
+	}
+
+	return result
+}
