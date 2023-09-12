@@ -50,60 +50,60 @@ func ReadVectorsFromFile(fileName string) [][]int {
 }
 
 func filterGreaterThan(value int, vec []int) []int {
-    var result []int
-    for _, element := range vec {
-        if element > value {
-            result = append(result, element)
-        }
-    }
-    return result
+	var result []int
+	for _, element := range vec {
+		if element > value {
+			result = append(result, element)
+		}
+	}
+	return result
 }
 
 func filterLowerOrEqualThan(value int, vec []int) []int {
-    var result []int
-    for _, element := range vec {
-        if element <= value {
-            result = append(result, element)
-        }
-    }
-    return result
+	var result []int
+	for _, element := range vec {
+		if element <= value {
+			result = append(result, element)
+		}
+	}
+	return result
 }
 
-func countingSort( ints IntVector, size int, place int) {
-	max := 10
-	count := ints[0]
-	output := ints[0]
+func countingSort(ints IntVector, size int, place int) {
+	// max := 10
+	// count := ints[0]
+	// output := ints[0]
 
-	// Calculate count of elements
-	for  i := 0; i < size; i++ {
-		count[(ints[i] / place) % 10]++;
-	}
+	// // Calculate count of elements
+	// for  i := 0; i < size; i++ {
+	// 	count[(ints[i] / place) % 10]++;
+	// }
 
-	// Calculate cumulative count
-	for  i := 0; i < max; i++ {
-		count[i] += count[i - 1];
-	}
+	// // Calculate cumulative count
+	// for  i := 0; i < max; i++ {
+	// 	count[i] += count[i - 1];
+	// }
 
-	// Place the elements in sorted order
-	for i := size - 1; i >= 0; i-- {
-		output[count[(ints[i] / place) % 10] - 1] = ints[i];
-		count[(ints[i] / place) % 10]--;
-	}
+	// // Place the elements in sorted order
+	// for i := size - 1; i >= 0; i-- {
+	// 	output[count[(ints[i] / place) % 10] - 1] = ints[i];
+	// 	count[(ints[i] / place) % 10]--;
+	// }
 
-	for i := 0; i < size; i++{
-		ints[i] = output[i];
-	}
-	
+	// for i := 0; i < size; i++{
+	// 	ints[i] = output[i];
+	// }
+
 }
 
 func getMax(ints IntVector, n int) int {
- 	max := ints[0]
- 	for i := 1; i < n; i++ {
- 	  	if ints[i] > max {
- 			max = ints[i]
+	max := ints[0]
+	for i := 1; i < n; i++ {
+		if ints[i] > max {
+			max = ints[i]
 		}
- 	}
-	return max;
+	}
+	return max
 }
 
 func concatMultipleSlices(slices []IntVector) IntVector {
@@ -122,4 +122,31 @@ func concatMultipleSlices(slices []IntVector) IntVector {
 	}
 
 	return result
+}
+
+// //////////////////////////////////////////////////////////////////////////////
+//
+//	HEAP														  //
+//
+// https://pkg.go.dev/container/heap											  //
+// //////////////////////////////////////////////////////////////////////////////
+// An IntHeap is a min-heap of ints.
+type IntHeap []int
+
+func (h IntHeap) Len() int           { return len(h) }
+func (h IntHeap) Less(i, j int) bool { return h[i] < h[j] }
+func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *IntHeap) Push(x any) {
+	// Push and Pop use pointer receivers because they modify the slice's length,
+	// not just its contents.
+	*h = append(*h, x.(int))
+}
+
+func (h *IntHeap) Pop() any {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
 }

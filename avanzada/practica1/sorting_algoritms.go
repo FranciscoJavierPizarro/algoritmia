@@ -2,24 +2,26 @@
 
 package main
 
-import "fmt"
+import (
+	"container/heap"
+	"fmt"
+)
 
 type IntVector []int
 
 // Define a functor for a function that takes an IntVector and returns an int.
 type IntVectorFunc func(IntVector)
 
-
 func RadixSort(ints IntVector) {
 	// Get maximum element
 	N := len(ints)
-	max := getMax(ints, N);
-  
+	max := getMax(ints, N)
+
 	// Apply counting sort to sort elements based on place value.
-	for place := 1; max / place > 0; place *= 10 {
-	  countingSort(ints, N, place)
+	for place := 1; max/place > 0; place *= 10 {
+		countingSort(ints, N, place)
 	}
-  }
+}
 
 func QuickSort(ints IntVector) {
 	fmt.Println(auxQuickSort(ints))
@@ -29,16 +31,18 @@ func QuickSort(ints IntVector) {
 func auxQuickSort(ints IntVector) IntVector {
 	if ints != nil && len(ints) > 1 {
 		pivote := ints[0]
-		menoresIguales := filterLowerOrEqualThan(pivote,ints[1:])
+		menoresIguales := filterLowerOrEqualThan(pivote, ints[1:])
 		// fmt.Println(menoresIguales)
-		mayores := filterGreaterThan(pivote,ints[1:])
+		mayores := filterGreaterThan(pivote, ints[1:])
 		// fmt.Println(mayores)
-		return append(append([]int (auxQuickSort(menoresIguales)),ints[:1]...),[]int (auxQuickSort(mayores))...)
+		return append(append([]int(auxQuickSort(menoresIguales)), ints[:1]...), []int(auxQuickSort(mayores))...)
 		// return concatMultipleSlices([]IntVector {auxQuickSort(menoresIguales), ints[:1], auxQuickSort(mayores)})
 	} else {
-		if len(ints) == 1 { 
-			return ints 
-		} else { return nil}
+		if len(ints) == 1 {
+			return ints
+		} else {
+			return nil
+		}
 	}
 }
 
@@ -91,9 +95,15 @@ func BubbleSort(ints IntVector) {
 }
 
 func HeapSort(ints IntVector) {
-	result := 1
+	h := &IntHeap{}
+	heap.Init(h)
+	heap.Push(h, 3)
 	for _, v := range ints {
-		result *= v
+		heap.Push(h, v)
+	}
+	// fmt.Printf("minimum: %d\n", (*h)[0])
+	for h.Len() > 0 {
+		fmt.Printf("%d ", heap.Pop(h))
 	}
 	return
 }
