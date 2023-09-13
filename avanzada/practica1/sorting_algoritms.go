@@ -62,12 +62,20 @@ func ConcurrentBogoSort(ints IntVector) {
 	return
 }
 
-func MergeSort(ints IntVector) {
-	result := 1
-	for _, v := range ints {
-		result *= v
+func recMergeSort(ints IntVector) IntVector {
+	N := len(ints)
+	if N > 1 {
+		firstHalf := recMergeSort(ints[:N/2])
+		secondHalf := recMergeSort(ints[N/2:])
+		mergedVec := merge(firstHalf, secondHalf)
+		return mergedVec
+	} else {
+		return ints
 	}
-	return
+}
+
+func MergeSort(ints IntVector) {
+	fmt.Println(recMergeSort(ints))
 }
 
 func ConcurrentMergeSort(ints IntVector) {

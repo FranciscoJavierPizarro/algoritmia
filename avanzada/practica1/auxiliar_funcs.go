@@ -124,6 +124,28 @@ func concatMultipleSlices(slices []IntVector) IntVector {
 	return result
 }
 
+func merge(A, B IntVector) IntVector {
+	NA, NB := len(A), len(B)
+	i, j := 0, 0
+	mergedVec := IntVector{}
+
+	for i < NA && j < NB {
+		if A[i] < B[j] {
+			mergedVec = append(mergedVec, A[i])
+			i++
+		} else {
+			mergedVec = append(mergedVec, B[j])
+			j++
+		}
+	}
+	if i < NA {
+		mergedVec = append(mergedVec, A[i:]...)
+	} else if j < NB {
+		mergedVec = append(mergedVec, B[j:]...)
+	}
+	return mergedVec
+}
+
 // //////////////////////////////////////////////////////////////////////////////
 //
 //	HEAP														  //

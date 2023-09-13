@@ -14,7 +14,9 @@ func main() {
 
 	// Define an array of functors.
 	// functions := []IntVectorFunc{RadixSort, QuickSort, ConcurrentQuickSort, ConcurrentBogoSort, MergeSort, ConcurrentMergeSort, BubbleSort, HeapSort, CubeSort, TreeSort}
-	functions := []IntVectorFunc{HeapSort}
+
+	// vectors := []IntVector{{43, 29, 51, 21, 74}}
+	functions := []IntVectorFunc{MergeSort}
 	for _, vector := range vectors {
 		for _, function := range functions {
 			// Measure execution time.
