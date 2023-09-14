@@ -13,14 +13,13 @@ type IntVector []int
 type IntVectorFunc func(IntVector)
 
 func RadixSort(ints IntVector) {
-	// Get maximum element
-	N := len(ints)
-	max := getMax(ints, N)
+	max := getMax(ints)
 
-	// Apply counting sort to sort elements based on place value.
-	for place := 1; max/place > 0; place *= 10 {
-		countingSort(ints, N, place)
+	for exp := 1; max/exp > 0; exp *= 10 {
+		ints = countingSort(ints, exp)
 	}
+	fmt.Println(ints)
+	return
 }
 
 func QuickSort(ints IntVector) {

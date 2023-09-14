@@ -69,38 +69,39 @@ func filterLowerOrEqualThan(value int, vec []int) []int {
 	return result
 }
 
-func countingSort(ints IntVector, size int, place int) {
-	// max := 10
-	// count := ints[0]
-	// output := ints[0]
+// Función de ordenación Counting Sort para números de 1 cifra
+func countingSort(ints IntVector, exp int) IntVector {
+	n := len(ints)
+	output := make([]int, n)
+	count := make([]int, 10)
 
-	// // Calculate count of elements
-	// for  i := 0; i < size; i++ {
-	// 	count[(ints[i] / place) % 10]++;
-	// }
+	//Contamos la frecuencia de cada dígito en el vector
+	for i := 0; i < n; i++ {
+		digit := (ints[i] / exp) % 10
+		count[digit]++
+	}
 
-	// // Calculate cumulative count
-	// for  i := 0; i < max; i++ {
-	// 	count[i] += count[i - 1];
-	// }
+	//Rellenamos el vector de conteo
+	for i := 1; i < 10; i++ {
+		count[i] += count[i-1]
+	}
 
-	// // Place the elements in sorted order
-	// for i := size - 1; i >= 0; i-- {
-	// 	output[count[(ints[i] / place) % 10] - 1] = ints[i];
-	// 	count[(ints[i] / place) % 10]--;
-	// }
+	//Realizamos la ordenación del vector
+	for i := n - 1; i >= 0; i-- {
+		digit := (ints[i] / exp) % 10
+		output[count[digit]-1] = ints[i]
+		count[digit]--
+	}
 
-	// for i := 0; i < size; i++{
-	// 	ints[i] = output[i];
-	// }
-
+	// Copiar el vector ordenado de vuelta al vector original.
+	return output
 }
 
-func getMax(ints IntVector, n int) int {
+func getMax(ints IntVector) int {
 	max := ints[0]
-	for i := 1; i < n; i++ {
-		if ints[i] > max {
-			max = ints[i]
+	for _, num := range ints {
+		if num > max {
+			max = num
 		}
 	}
 	return max
