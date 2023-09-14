@@ -5,6 +5,7 @@ package main
 import (
 	"container/heap"
 	"fmt"
+	"math/rand"
 )
 
 type IntVector []int
@@ -53,10 +54,28 @@ func ConcurrentQuickSort(ints IntVector) {
 	return
 }
 
+func bogoSortInstance(seguir,encontrado chan bool, ints IntVector) {
+	sigo := true
+	rand.Seed(time.Now().UnixNano())
+
+	for sigo {
+		encontrado <- isSorted(shuffle(ints))
+		sigo <- seguir
+	}
+}
+
 func ConcurrentBogoSort(ints IntVector) {
-	result := 1
-	for _, v := range ints {
-		result *= v
+	keepSearching := true
+	nWorkers := 10
+	seguir := make(nWorkers,make(chan bool))
+	resultados := make(nWorkers,make(chan bool))
+	for I:= 0; I < nWorkers; I++ {
+		go bogoSortInstance(seguir[i],resultados[i],ints)
+	}
+
+	nRestantes := nWorkers
+	for nRestantes > 0 {
+		// Falta rematar lógica de fin
 	}
 	return
 }

@@ -147,6 +147,14 @@ func merge(A, B IntVector) IntVector {
 	return mergedVec
 }
 
+func isSorted(A IntVector) bool {
+	N := len(A)
+	for (i := 1; i < N; i++) {
+		if (A[i - 1] < A[i]) return false
+	}
+	return true
+}
+
 // //////////////////////////////////////////////////////////////////////////////
 //
 //	HEAP														  //
