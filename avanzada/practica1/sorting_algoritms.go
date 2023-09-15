@@ -155,5 +155,8 @@ func TreeSort(ints IntVector) {
 	for _, v := range ints {
 		t.insert(v)
 	}
+	fmt.Print("[")
+	printPostOrder(t.root)
+	fmt.Print("]")
 	return
 }

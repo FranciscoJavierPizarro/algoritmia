@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"math/rand"
 	"os"
 	"reflect"
@@ -237,13 +238,12 @@ func (n *Node) insert(data int) {
 	}
 }
 
-/* func printPostOrder(n *Node) IntVector{
+func printPostOrder(n *Node) {
 	if n == nil {
 		return
 	} else {
 		printPostOrder(n.left)
+		fmt.Print(n.key, " ")
 		printPostOrder(n.right)
-		fmt.Printf("%c ", n.data)
 	}
-
-} */
+}
