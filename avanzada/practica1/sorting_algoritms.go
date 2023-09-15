@@ -124,9 +124,15 @@ func CubeSort(ints IntVector) {
 }
 
 func TreeSort(ints IntVector) {
-	result := 1
-	for _, v := range ints {
-		result *= v
+	var root *Node
+
+	root = insert(root, ints[0])
+	for i := 1; i < len(ints); i++ {
+		root = insert(root, ints[i])
 	}
+
+	i := 0
+	storeSorted(root, ints, &i)
+	fmt.Println(ints)
 	return
 }

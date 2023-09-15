@@ -149,9 +149,9 @@ func merge(A, B IntVector) IntVector {
 
 // //////////////////////////////////////////////////////////////////////////////
 //
-//	HEAP														  //
+//	HEAP														  			   //
 //
-// https://pkg.go.dev/container/heap											  //
+// https://pkg.go.dev/container/heap										   //
 // //////////////////////////////////////////////////////////////////////////////
 // An IntHeap is a min-heap of ints.
 type IntHeap []int
@@ -172,4 +172,45 @@ func (h *IntHeap) Pop() any {
 	x := old[n-1]
 	*h = old[0 : n-1]
 	return x
+}
+
+// //////////////////////////////////////////////////////////////////////////////
+//
+//	TREE														  			   //
+//
+//                                    										   //
+// //////////////////////////////////////////////////////////////////////////////
+
+type Node struct {
+	key   int
+	left  *Node
+	right *Node
+}
+
+func newNode(item int) *Node {
+	temp := &Node{key: item, left: nil, right: nil}
+	return temp
+}
+
+func storeSorted(root *Node, arr []int, i *int) {
+	if root != nil {
+		storeSorted(root.left, arr, i)
+		arr[*i] = root.key
+		*i++
+		storeSorted(root.right, arr, i)
+	}
+}
+
+func insert(node *Node, key int) *Node {
+	if node == nil {
+		return newNode(key)
+	}
+
+	if key < node.key {
+		node.left = insert(node.left, key)
+	} else if key > node.key {
+		node.right = insert(node.right, key)
+	}
+
+	return node
 }
