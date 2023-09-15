@@ -6,6 +6,7 @@ import (
 	"container/heap"
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 type IntVector []int
@@ -60,22 +61,29 @@ func bogoSortInstance(seguir,encontrado chan bool, ints IntVector) {
 
 	for sigo {
 		encontrado <- isSorted(shuffle(ints))
-		sigo <- seguir
+		sigo = <- seguir
 	}
 }
 
 func ConcurrentBogoSort(ints IntVector) {
 	keepSearching := true
-	nWorkers := 10
-	seguir := make(nWorkers,make(chan bool))
-	resultados := make(nWorkers,make(chan bool))
+	nWorkers := len(ints)
+	seguir := make(chan bool)
+	encontrado := make(chan bool)
 	for I:= 0; I < nWorkers; I++ {
-		go bogoSortInstance(seguir[i],resultados[i],ints)
+		go bogoSortInstance(seguir,encontrado,ints)
 	}
 
-	nRestantes := nWorkers
+	for keepSearching {
+		keepSearching = !<- encontrado
+		seguir <- keepSearching
+	}
+
+	nRestantes := nWorkers - 1
 	for nRestantes > 0 {
-		// Falta rematar lógica de fin
+		<- encontrado
+		seguir <- keepSearching
+		nRestantes--
 	}
 	return
 }

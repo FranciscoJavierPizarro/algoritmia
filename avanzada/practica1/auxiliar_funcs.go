@@ -7,6 +7,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"math/rand"
 )
 
 // Helper function to get the name of a function.
@@ -149,10 +150,20 @@ func merge(A, B IntVector) IntVector {
 
 func isSorted(A IntVector) bool {
 	N := len(A)
-	for (i := 1; i < N; i++) {
-		if (A[i - 1] < A[i]) return false
+	for i := 1; i < N; i++ {
+		if (A[i - 1] < A[i]) {return false}
 	}
 	return true
+}
+
+
+func shuffle(ints IntVector) IntVector {
+    n := len(ints)
+    for i := n - 1; i > 0; i-- {
+        j := rand.Intn(i + 1)
+        ints[i], ints[j] = ints[j], ints[i]
+    }
+	return ints
 }
 
 // //////////////////////////////////////////////////////////////////////////////
