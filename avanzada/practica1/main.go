@@ -4,7 +4,9 @@ package main
 // go run *.go
 import (
 	"fmt"
+	"os"
 	"time"
+	"strings"
 )
 
 func main() {
@@ -15,19 +17,36 @@ func main() {
 	// Define an array of functors.
 	// functions := []IntVectorFunc{RadixSort, QuickSort, ConcurrentQuickSort, ConcurrentBogoSort, MergeSort, ConcurrentMergeSort, BubbleSort, HeapSort, CubeSort, TreeSort}
 
+	filePath := "medidas.txt"
+
+	// Open the file for writing. Create it if it doesn't exist, truncate it if it does.
+	file, _ := os.Create(filePath)
+	defer file.Close()
+
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	functions := []IntVectorFunc{TreeSort, RadixSort}
+	functions := []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort}
+	header := "Size"
+	for _, function := range functions {
+		header += " " + strings.Split(FunctionName(function), ".")[1]
+	}
+	header += "\n"
+	file.Write([]byte(header))
+	timeMeasure := ""
 	for _, vector := range vectors {
+		timeMeasure = fmt.Sprintf("%d", len(vector))
 		for _, function := range functions {
 			// Measure execution time.
 			fmt.Printf("Function: %s\n", FunctionName(function))
 			start := time.Now()
 			function(vector)
-			duration := time.Since(start)
+			duration := time.Since(start).Milliseconds()
+			timeMeasure += " " + fmt.Sprintf("%d", duration)
 
 			// Print the result and execution time.
-			fmt.Printf("Execution Time: %s\n", duration)
+			fmt.Printf("Execution Time: %d\n", duration)
 			fmt.Println()
 		}
+		timeMeasure += "\n"
+		file.Write([]byte(timeMeasure))
 	}
 }
