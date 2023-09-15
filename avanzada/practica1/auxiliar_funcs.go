@@ -2,12 +2,12 @@ package main
 
 import (
 	"bufio"
+	"math/rand"
 	"os"
 	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
-	"math/rand"
 )
 
 // Helper function to get the name of a function.
@@ -151,18 +151,19 @@ func merge(A, B IntVector) IntVector {
 func isSorted(A IntVector) bool {
 	N := len(A)
 	for i := 1; i < N; i++ {
-		if (A[i - 1] < A[i]) {return false}
+		if A[i-1] < A[i] {
+			return false
+		}
 	}
 	return true
 }
 
-
 func shuffle(ints IntVector) IntVector {
-    n := len(ints)
-    for i := n - 1; i > 0; i-- {
-        j := rand.Intn(i + 1)
-        ints[i], ints[j] = ints[j], ints[i]
-    }
+	n := len(ints)
+	for i := n - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
+		ints[i], ints[j] = ints[j], ints[i]
+	}
 	return ints
 }
 
@@ -200,36 +201,49 @@ func (h *IntHeap) Pop() any {
 //                                    										   //
 // //////////////////////////////////////////////////////////////////////////////
 
+type Tree struct {
+	root *Node
+}
+
 type Node struct {
 	key   int
 	left  *Node
 	right *Node
 }
 
-func newNode(item int) *Node {
-	temp := &Node{key: item, left: nil, right: nil}
-	return temp
-}
-
-func storeSorted(root *Node, arr []int, i *int) {
-	if root != nil {
-		storeSorted(root.left, arr, i)
-		arr[*i] = root.key
-		*i++
-		storeSorted(root.right, arr, i)
+// Tree
+func (t *Tree) insert(data int) {
+	if t.root == nil {
+		t.root = &Node{key: data}
+	} else {
+		t.root.insert(data)
 	}
 }
 
-func insert(node *Node, key int) *Node {
-	if node == nil {
-		return newNode(key)
+// Node
+func (n *Node) insert(data int) {
+	if data <= n.key {
+		if n.left == nil {
+			n.left = &Node{key: data}
+		} else {
+			n.left.insert(data)
+		}
+	} else {
+		if n.right == nil {
+			n.right = &Node{key: data}
+		} else {
+			n.right.insert(data)
+		}
 	}
-
-	if key < node.key {
-		node.left = insert(node.left, key)
-	} else if key > node.key {
-		node.right = insert(node.right, key)
-	}
-
-	return node
 }
+
+/* func printPostOrder(n *Node) IntVector{
+	if n == nil {
+		return
+	} else {
+		printPostOrder(n.left)
+		printPostOrder(n.right)
+		fmt.Printf("%c ", n.data)
+	}
+
+} */

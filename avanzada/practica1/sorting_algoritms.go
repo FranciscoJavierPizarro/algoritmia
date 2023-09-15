@@ -55,13 +55,13 @@ func ConcurrentQuickSort(ints IntVector) {
 	return
 }
 
-func bogoSortInstance(seguir,encontrado chan bool, ints IntVector) {
+func bogoSortInstance(seguir, encontrado chan bool, ints IntVector) {
 	sigo := true
 	rand.Seed(time.Now().UnixNano())
 
 	for sigo {
 		encontrado <- isSorted(shuffle(ints))
-		sigo = <- seguir
+		sigo = <-seguir
 	}
 }
 
@@ -70,18 +70,18 @@ func ConcurrentBogoSort(ints IntVector) {
 	nWorkers := len(ints)
 	seguir := make(chan bool)
 	encontrado := make(chan bool)
-	for I:= 0; I < nWorkers; I++ {
-		go bogoSortInstance(seguir,encontrado,ints)
+	for I := 0; I < nWorkers; I++ {
+		go bogoSortInstance(seguir, encontrado, ints)
 	}
 
 	for keepSearching {
-		keepSearching = !<- encontrado
+		keepSearching = !<-encontrado
 		seguir <- keepSearching
 	}
 
 	nRestantes := nWorkers - 1
 	for nRestantes > 0 {
-		<- encontrado
+		<-encontrado
 		seguir <- keepSearching
 		nRestantes--
 	}
@@ -151,15 +151,9 @@ func CubeSort(ints IntVector) {
 }
 
 func TreeSort(ints IntVector) {
-	var root *Node
-
-	root = insert(root, ints[0])
-	for i := 1; i < len(ints); i++ {
-		root = insert(root, ints[i])
+	var t Tree
+	for _, v := range ints {
+		t.insert(v)
 	}
-
-	i := 0
-	storeSorted(root, ints, &i)
-	fmt.Println(ints)
 	return
 }
