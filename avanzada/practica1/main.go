@@ -17,24 +17,26 @@ func main() {
 	// Parse command line arguments
 	flag.Parse()
 	verbose := *verb
-	vectors := ReadVectorsFromFile("./random_arrays.txt")
 	if (verbose) {
 		fmt.Println("Vectores cargados.")
 	}
 	// Sample integer vector.
 	// vector := IntVector{1, 2, 3, 4, 5}
-
+	
 	// Define an array of functors.
 	// functions := []IntVectorFunc{RadixSort, QuickSort, ConcurrentQuickSort, ConcurrentBogoSort, MergeSort, ConcurrentMergeSort, BubbleSort, HeapSort, CubeSort, TreeSort}
-
+	
 	filePath := "medidas.txt"
-
+	
 	// Open the file for writing. Create it if it doesn't exist, truncate it if it does.
 	file, _ := os.Create(filePath)
 	defer file.Close()
-
+	
+	vectors := ReadVectorsFromFile("./random_arrays.txt")
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	functions := []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
+	functions := []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort}
+	// functions := []IntVectorFunc{}
+
 	header := "Size"
 	for _, function := range functions {
 		header += " " + strings.Split(FunctionName(function), ".")[1]
@@ -42,7 +44,7 @@ func main() {
 	header += "\n"
 	file.Write([]byte(header))
 	timeMeasure := ""
-	for _, vector := range vectors {
+	for _, vector := range vectors[:4] {
 		timeMeasure = fmt.Sprintf("%d", len(vector))
 		for _, function := range functions {
 			// Measure execution time.

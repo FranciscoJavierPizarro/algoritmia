@@ -123,11 +123,28 @@ func MergeSort(ints IntVector, verbose bool) {
 }
 
 func ConcurrentMergeSort(ints IntVector, verbose bool) {
-	result := 1
-	for _, v := range ints {
-		result *= v
+	retChan := make(chan IntVector)
+	go concurrentRecMergeSort(ints,retChan)
+	resultado := <- retChan
+
+	if (verbose) {
+		fmt.Println(resultado)
 	}
-	return
+}
+
+func concurrentRecMergeSort(ints IntVector, ret chan IntVector) {
+	N := len(ints)
+	if N > 1 {
+		resultados := make(chan IntVector)
+		go concurrentRecMergeSort(ints[:N/2], resultados)
+		go concurrentRecMergeSort(ints[N/2:], resultados)
+		a := <- resultados
+		b := <- resultados
+		mergedVec := merge(a, b)
+		ret <- mergedVec
+	} else {
+		ret <- ints
+	}
 }
 
 func BubbleSort(ints IntVector, verbose bool) {
