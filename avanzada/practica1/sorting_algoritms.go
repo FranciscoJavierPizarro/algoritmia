@@ -124,7 +124,7 @@ func MergeSort(ints IntVector, verbose bool) {
 
 func ConcurrentMergeSort(ints IntVector, verbose bool) {
 	retChan := make(chan IntVector)
-	go concurrentRecMergeSort(ints,retChan)
+	go concurrentRecMergeSort(ints,retChan,4)
 	resultado := <- retChan
 
 	if (verbose) {
@@ -132,14 +132,20 @@ func ConcurrentMergeSort(ints IntVector, verbose bool) {
 	}
 }
 
-func concurrentRecMergeSort(ints IntVector, ret chan IntVector) {
+func concurrentRecMergeSort(ints IntVector, ret chan IntVector, w int) {
 	N := len(ints)
+	var a,b IntVector
 	if N > 1 {
-		resultados := make(chan IntVector)
-		go concurrentRecMergeSort(ints[:N/2], resultados)
-		go concurrentRecMergeSort(ints[N/2:], resultados)
-		a := <- resultados
-		b := <- resultados
+		if (w > 0) {
+			resultados := make(chan IntVector)
+			go concurrentRecMergeSort(ints[:N/2], resultados, w - 1)
+			go concurrentRecMergeSort(ints[N/2:], resultados, w - 1)
+			a = <- resultados
+			b = <- resultados
+		} else {
+			a = recMergeSort(ints[:N/2])
+			b = recMergeSort(ints[N/2:])
+		}
 		mergedVec := merge(a, b)
 		ret <- mergedVec
 	} else {

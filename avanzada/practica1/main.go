@@ -44,7 +44,7 @@ func main() {
 	header += "\n"
 	file.Write([]byte(header))
 	timeMeasure := ""
-	for _, vector := range vectors[:4] {
+	for _, vector := range vectors {
 		timeMeasure = fmt.Sprintf("%d", len(vector))
 		for _, function := range functions {
 			// Measure execution time.
