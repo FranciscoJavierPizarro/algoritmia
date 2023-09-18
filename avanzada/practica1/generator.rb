@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 # Function to generate a random integer array of a given length
 def generate_random_array(length)
-    Array.new(length) { rand(1..100) } # Change the range as needed
+    Array.new(length) { rand(1..1000000) } # Change the range as needed
   end
   
   # Create three random integer arrays
@@ -10,6 +10,7 @@ def generate_random_array(length)
   array3 = generate_random_array(500)
   array4 = generate_random_array(5000)
   array5 = generate_random_array(10000)
+  array6 = generate_random_array(100000)
   # Open a file for writing
   file_name = "random_arrays.txt"
   File.open(file_name, "w") do |file|
@@ -19,6 +20,7 @@ def generate_random_array(length)
     file.puts(array3.join(' '))
     file.puts(array4.join(' '))
     file.puts(array5.join(' '))
+    file.puts(array6.join(' '))
   end
   
   puts "Random arrays have been written to #{file_name}"

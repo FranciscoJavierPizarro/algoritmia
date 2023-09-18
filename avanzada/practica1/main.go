@@ -18,6 +18,9 @@ func main() {
 	flag.Parse()
 	verbose := *verb
 	vectors := ReadVectorsFromFile("./random_arrays.txt")
+	if (verbose) {
+		fmt.Println("Vectores cargados.")
+	}
 	// Sample integer vector.
 	// vector := IntVector{1, 2, 3, 4, 5}
 
