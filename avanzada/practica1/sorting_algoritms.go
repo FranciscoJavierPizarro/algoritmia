@@ -12,20 +12,26 @@ import (
 type IntVector []int
 
 // Define a functor for a function that takes an IntVector and returns an int.
-type IntVectorFunc func(IntVector)
+type IntVectorFunc func(IntVector, bool)
 
-func RadixSort(ints IntVector) {
+func RadixSort(ints IntVector, verbose bool) {
 	max := getMax(ints)
 
 	for exp := 1; max/exp > 0; exp *= 10 {
 		ints = countingSort(ints, exp)
 	}
-	fmt.Println(ints)
+	
+	if (verbose) {
+		fmt.Println(ints)
+	}
 	return
 }
 
-func QuickSort(ints IntVector) {
-	fmt.Println(auxQuickSort(ints))
+func QuickSort(ints IntVector, verbose bool) {
+	result := auxQuickSort(ints)
+	if (verbose) {
+		fmt.Println(result)
+	}
 	return
 }
 
@@ -47,7 +53,7 @@ func auxQuickSort(ints IntVector) IntVector {
 	}
 }
 
-func ConcurrentQuickSort(ints IntVector) {
+func ConcurrentQuickSort(ints IntVector, verbose bool) {
 	result := 1
 	for _, v := range ints {
 		result *= v
@@ -55,30 +61,39 @@ func ConcurrentQuickSort(ints IntVector) {
 	return
 }
 
-func bogoSortInstance(seguir, encontrado chan bool, ints IntVector) {
+func bogoSortInstance(seguir, encontrado chan bool, ints IntVector, res chan IntVector) {
 	sigo := true
 	rand.Seed(time.Now().UnixNano())
 
 	for sigo {
-		encontrado <- isSorted(shuffle(ints))
+		newVec := shuffle(ints)
+		sorted := isSorted(newVec)
+		encontrado <- sorted
 		sigo = <-seguir
+		if (sorted) {
+			res <- newVec
+		}
 	}
 }
 
-func ConcurrentBogoSort(ints IntVector) {
+func ConcurrentBogoSort(ints IntVector, verbose bool) {
 	keepSearching := true
 	nWorkers := len(ints)
 	seguir := make(chan bool)
 	encontrado := make(chan bool)
+	res := make(chan IntVector)
 	for I := 0; I < nWorkers; I++ {
-		go bogoSortInstance(seguir, encontrado, ints)
+		go bogoSortInstance(seguir, encontrado, ints, res)
 	}
 
 	for keepSearching {
 		keepSearching = !<-encontrado
 		seguir <- keepSearching
 	}
-
+	resultado := <- res
+	if (verbose) {
+		fmt.Println(resultado)
+	}
 	nRestantes := nWorkers - 1
 	for nRestantes > 0 {
 		<-encontrado
@@ -100,11 +115,14 @@ func recMergeSort(ints IntVector) IntVector {
 	}
 }
 
-func MergeSort(ints IntVector) {
-	fmt.Println(recMergeSort(ints))
+func MergeSort(ints IntVector, verbose bool) {
+	resultado := recMergeSort(ints)
+	if (verbose) {
+		fmt.Println(resultado)
+	}
 }
 
-func ConcurrentMergeSort(ints IntVector) {
+func ConcurrentMergeSort(ints IntVector, verbose bool) {
 	result := 1
 	for _, v := range ints {
 		result *= v
@@ -112,7 +130,7 @@ func ConcurrentMergeSort(ints IntVector) {
 	return
 }
 
-func BubbleSort(ints IntVector) {
+func BubbleSort(ints IntVector, verbose bool) {
 	N := len(ints)
 	aux := 0
 	for i := range ints {
@@ -124,11 +142,15 @@ func BubbleSort(ints IntVector) {
 			}
 		}
 	}
-	fmt.Println(ints)
+	
+	if (verbose) {
+		fmt.Println(ints)
+	}
+
 	return
 }
 
-func HeapSort(ints IntVector) {
+func HeapSort(ints IntVector, verbose bool) {
 	h := &IntHeap{}
 	heap.Init(h)
 	heap.Push(h, 3)
@@ -137,12 +159,16 @@ func HeapSort(ints IntVector) {
 	}
 	// fmt.Printf("minimum: %d\n", (*h)[0])
 	for h.Len() > 0 {
-		fmt.Printf("%d ", heap.Pop(h))
+		if (verbose) {
+			fmt.Printf("%d ", heap.Pop(h))
+		} else {
+			heap.Pop(h)
+		}
 	}
 	return
 }
 
-func CubeSort(ints IntVector) {
+func CubeSort(ints IntVector, verbose bool) {
 	result := 1
 	for _, v := range ints {
 		result *= v
@@ -150,13 +176,17 @@ func CubeSort(ints IntVector) {
 	return
 }
 
-func TreeSort(ints IntVector) {
+func TreeSort(ints IntVector, verbose bool) {
 	var t Tree
 	for _, v := range ints {
 		t.insert(v)
 	}
-	fmt.Print("[")
-	printPostOrder(t.root)
-	fmt.Print("]")
+	if (verbose) {
+		fmt.Print("[")
+		printPostOrder(t.root)
+		fmt.Print("]")
+	} else {
+		//añadir versión sin prints
+	}
 	return
 }

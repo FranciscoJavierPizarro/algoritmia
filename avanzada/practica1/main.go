@@ -7,9 +7,16 @@ import (
 	"os"
 	"time"
 	"strings"
+	"flag"
 )
 
 func main() {
+	// Define a boolean flag for verbose mode
+	verb := flag.Bool("v", false, "Enable verbose mode")
+
+	// Parse command line arguments
+	flag.Parse()
+	verbose := *verb
 	vectors := ReadVectorsFromFile("./random_arrays.txt")
 	// Sample integer vector.
 	// vector := IntVector{1, 2, 3, 4, 5}
@@ -36,15 +43,19 @@ func main() {
 		timeMeasure = fmt.Sprintf("%d", len(vector))
 		for _, function := range functions {
 			// Measure execution time.
-			fmt.Printf("Function: %s\n", FunctionName(function))
+			if (verbose) {
+				fmt.Printf("Function: %s\n", FunctionName(function))
+			}
+
 			start := time.Now()
-			function(vector)
+			function(vector,verbose)
 			duration := time.Since(start).Milliseconds()
 			timeMeasure += " " + fmt.Sprintf("%d", duration)
 
-			// Print the result and execution time.
-			fmt.Printf("Execution Time: %d\n", duration)
-			fmt.Println()
+			if (verbose) {
+				fmt.Printf("Execution Time: %d\n", duration)
+				fmt.Println()
+			}
 		}
 		timeMeasure += "\n"
 		file.Write([]byte(timeMeasure))
