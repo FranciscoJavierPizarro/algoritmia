@@ -27,7 +27,7 @@ func ReadVectorsFromFile(fileName string) [][]int {
 
 	var vectors [][]int
 	scanner := bufio.NewScanner(file)
-	const maxBufferSize = 64 * 1024 * 1024 // 64 MB buffer size
+	const maxBufferSize = 1024 * 1024 * 1024 // 1 GB buffer size
 	buf := make([]byte, maxBufferSize)
 	scanner.Buffer(buf, maxBufferSize)
 	for scanner.Scan() {

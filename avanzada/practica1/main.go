@@ -34,7 +34,7 @@ func main() {
 	defer file.Close()
 
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	functions := []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort}
+	functions := []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
 	header := "Size"
 	for _, function := range functions {
 		header += " " + strings.Split(FunctionName(function), ".")[1]

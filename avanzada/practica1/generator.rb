@@ -11,6 +11,9 @@ def generate_random_array(length)
   array4 = generate_random_array(5000)
   array5 = generate_random_array(10000)
   array6 = generate_random_array(100000)
+  array7 = generate_random_array(1000000)
+  array8 = generate_random_array(10000000)
+
   # Open a file for writing
   file_name = "random_arrays.txt"
   File.open(file_name, "w") do |file|
@@ -21,6 +24,8 @@ def generate_random_array(length)
     file.puts(array4.join(' '))
     file.puts(array5.join(' '))
     file.puts(array6.join(' '))
+    file.puts(array7.join(' '))
+    file.puts(array8.join(' '))
   end
   
   puts "Random arrays have been written to #{file_name}"
