@@ -34,7 +34,7 @@ func main() {
 	
 	vectors := ReadVectorsFromFile("./random_arrays.txt")
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	functions := []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort}
+	functions := []IntVectorFunc{HeapSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort}
 	// functions := []IntVectorFunc{}
 
 	header := "Size"
