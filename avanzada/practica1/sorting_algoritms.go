@@ -28,22 +28,21 @@ func RadixSort(ints IntVector, verbose bool) {
 }
 
 func QuickSort(ints IntVector, verbose bool) {
-	result := auxQuickSort(ints)
+	result := recQuickSort(ints)
 	if (verbose) {
 		fmt.Println(result)
 	}
 	return
 }
 
-func auxQuickSort(ints IntVector) IntVector {
+func recQuickSort(ints IntVector) IntVector {
 	if ints != nil && len(ints) > 1 {
 		pivote := ints[0]
-		menoresIguales := filterLowerOrEqualThan(pivote, ints[1:])
+		menoresIguales, mayores := divideInLowersAndGreaters(pivote, ints[1:])
 		// fmt.Println(menoresIguales)
-		mayores := filterGreaterThan(pivote, ints[1:])
 		// fmt.Println(mayores)
-		return append(append([]int(auxQuickSort(menoresIguales)), ints[:1]...), []int(auxQuickSort(mayores))...)
-		// return concatMultipleSlices([]IntVector {auxQuickSort(menoresIguales), ints[:1], auxQuickSort(mayores)})
+		return append(append([]int(recQuickSort(menoresIguales)), ints[:1]...), []int(recQuickSort(mayores))...)
+		// return concatMultipleSlices([]IntVector {recQuickSort(menoresIguales), ints[:1], recQuickSort(mayores)})
 	} else {
 		if len(ints) == 1 {
 			return ints
@@ -54,12 +53,38 @@ func auxQuickSort(ints IntVector) IntVector {
 }
 
 func ConcurrentQuickSort(ints IntVector, verbose bool) {
-	result := 1
-	for _, v := range ints {
-		result *= v
+	retChan := make(chan IntVector)
+	go concurrentRecQuickSort(ints,retChan,4)
+	resultado := <- retChan
+
+	if (verbose) {
+		fmt.Println(resultado)
 	}
-	return
 }
+
+func concurrentRecQuickSort(ints IntVector, ret chan IntVector, w int) {
+	N := len(ints)
+	var a,b IntVector
+	if N > 1 {
+		pivote := ints[0]
+		menoresIguales , mayores := divideInLowersAndGreaters(pivote, ints[1:])
+		if (w > 0) {
+			lowerRes, higherRes := make(chan IntVector), make(chan IntVector)
+			go concurrentRecQuickSort(menoresIguales, lowerRes, w - 1)
+			go concurrentRecQuickSort(mayores, higherRes, w - 1)
+			a = <- lowerRes
+			b = <- higherRes
+		} else {
+			a = recQuickSort(menoresIguales)
+			b = recQuickSort(mayores)
+		}
+		finalVec := append(append(a, pivote), b...)
+		ret <- finalVec
+	} else {
+		ret <- ints
+	}
+}
+
 
 func bogoSortInstance(seguir, encontrado chan bool, ints IntVector, res chan IntVector) {
 	sigo := true
@@ -206,10 +231,10 @@ func TreeSort(ints IntVector, verbose bool) {
 	}
 	if (verbose) {
 		fmt.Print("[")
-		printPostOrder(t.root)
+	}
+		postOrder(t.root , verbose)
+	if (verbose) {
 		fmt.Print("]")
-	} else {
-		//añadir versión sin prints
 	}
 	return
 }

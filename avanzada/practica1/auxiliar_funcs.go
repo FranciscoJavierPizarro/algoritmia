@@ -53,24 +53,16 @@ func ReadVectorsFromFile(fileName string) [][]int {
 	return vectors
 }
 
-func filterGreaterThan(value int, vec []int) []int {
-	var result []int
-	for _, element := range vec {
-		if element > value {
-			result = append(result, element)
-		}
-	}
-	return result
-}
-
-func filterLowerOrEqualThan(value int, vec []int) []int {
-	var result []int
+func divideInLowersAndGreaters(value int, vec []int) ([]int,[]int) {
+	var lowerEqual,greater []int
 	for _, element := range vec {
 		if element <= value {
-			result = append(result, element)
+			lowerEqual = append(lowerEqual, element)
+		} else {
+			greater = append(greater, element)
 		}
 	}
-	return result
+	return lowerEqual, greater
 }
 
 // Función de ordenación Counting Sort para números de 1 cifra
@@ -240,12 +232,14 @@ func (n *Node) insert(data int) {
 	}
 }
 
-func printPostOrder(n *Node) {
+func postOrder(n *Node, verbose bool) {
 	if n == nil {
 		return
 	} else {
-		printPostOrder(n.left)
-		fmt.Print(n.key, " ")
-		printPostOrder(n.right)
+		postOrder(n.left,verbose)
+		if (verbose) {
+			fmt.Print(n.key, " ")
+		}
+		postOrder(n.right,verbose)
 	}
 }
