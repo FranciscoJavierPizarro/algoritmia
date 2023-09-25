@@ -22,6 +22,9 @@ func main() {
 	input := ""
 	functions := []IntVectorFunc{}
 	switch *dataset {
+	case "real":
+		input = "./datasets/real.tsv"
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort, ConcurrentQuickSort}
 	case "simple":
 		input = "./datasets/small.txt"
 		functions = []IntVectorFunc{RadixSort, ConcurrentBogoSort }
