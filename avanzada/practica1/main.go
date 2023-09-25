@@ -25,12 +25,15 @@ func main() {
 	case "simple":
 		input = "./datasets/small.txt"
 		functions = []IntVectorFunc{RadixSort, ConcurrentBogoSort }
-	case "medio":
-		input = "./datasets/medium.txt"
+	case "medio-small":
+		input = "./datasets/mediumsmall.txt"
 		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort,PancakeSort}
 	case "medioParcialmenteOrdenado":
 		input = "./datasets/semiSortedmedium.txt"
-		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort,PancakeSort}
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
+	case "medio-big":
+		input = "./datasets/mediumbig.txt"
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
 	case "big":
 	default:
 		input = "./datasets/big.txt"

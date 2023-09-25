@@ -8,7 +8,8 @@ file_name = "random_arrays.txt"
 
 # Array of different lengths
 big_array_lengths = [5, 50, 500, 5000, 10000, 100000, 1000000, 10000000, 100000000]
-medium_array_lengths = [5, 50, 500, 5000, 10000, 100000]
+mediumsmall_array_lengths = [5, 50, 500, 5000, 10000, 100000]
+mediumbig_array_lengths = [5, 50, 500, 5000, 10000, 100000, 1000000, 5000000]
 small_array_lengths = [5, 10, 50, 100, 500]
 # Open a file for writing
 File.open("./datasets/big.txt", "w") do |file|
@@ -21,8 +22,18 @@ File.open("./datasets/big.txt", "w") do |file|
   end
 end
 
-File.open("./datasets/medium.txt", "w") do |file|
-  medium_array_lengths.each do |length|
+File.open("./datasets/mediumsmall.txt", "w") do |file|
+  mediumsmall_array_lengths.each do |length|
+    # Generate a random array
+    random_array = generate_random_array(length)
+    
+    # Write the array to the file on a separate line
+    file.puts(random_array.join(' '))
+  end
+end
+
+File.open("./datasets/mediumbig.txt", "w") do |file|
+  mediumbig_array_lengths.each do |length|
     # Generate a random array
     random_array = generate_random_array(length)
     

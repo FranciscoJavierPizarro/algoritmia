@@ -6,10 +6,7 @@ df = pd.read_csv('medidas.txt', delim_whitespace=True)
 # Create a basic plot
 plt.figure(figsize=(10, 6))
 algoritms = [
-"HeapSort", 
-#"TreeSort", 
-"RadixSort", "MergeSort", "QuickSort", "ConcurrentMergeSort", "ConcurrentQuickSort" 
-#"BubbleSort"
+"HeapSort", "TreeSort", "RadixSort", "MergeSort", "QuickSort", "BubbleSort", "PancakeSort"
 
 
 ]
