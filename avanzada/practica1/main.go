@@ -12,22 +12,39 @@ import (
 
 func main() {
 	verb := flag.Bool("v", false, "Enable verbose mode")
+	dataset := flag.String("dataset", "medio", "Dataset to use (simple, medioParcialmenteOrdenado ,medio, grande)")
 
 	flag.Parse()
 	verbose := *verb
 	if (verbose) {
 		fmt.Println("Vectores cargados.")
 	}
-	
-	filePath := "medidas.txt"
+	input := ""
+	functions := []IntVectorFunc{}
+	switch *dataset {
+	case "simple":
+		input = "./datasets/small.txt"
+		functions = []IntVectorFunc{RadixSort, ConcurrentBogoSort }
+	case "medio":
+		input = "./datasets/medium.txt"
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort,PancakeSort}
+	case "medioParcialmenteOrdenado":
+		input = "./datasets/semiSortedmedium.txt"
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort,PancakeSort}
+	case "big":
+	default:
+		input = "./datasets/big.txt"
+		functions = []IntVectorFunc{RadixSort, ConcurrentMergeSort, ConcurrentQuickSort}
+	}
+
+	outputFilePath := "medidas.txt"
 	
 	// Open the file for writing. Create it if it doesn't exist, truncate it if it does.
-	file, _ := os.Create(filePath)
+	file, _ := os.Create(outputFilePath)
 	defer file.Close()
 	
-	vectors := ReadVectorsFromFile("./random_arrays.txt")
+	vectors := ReadVectorsFromFile(input)
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	functions := []IntVectorFunc{HeapSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort, ConcurrentQuickSort, PancakeSort}
 	// functions := []IntVectorFunc{}
 
 	header := "Size"
@@ -43,6 +60,7 @@ func main() {
 			// Measure execution time.
 			if (verbose) {
 				fmt.Printf("Function: %s\n", FunctionName(function))
+				fmt.Println(len(vector))
 			}
 
 			start := time.Now()

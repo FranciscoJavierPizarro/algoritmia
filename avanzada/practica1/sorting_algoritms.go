@@ -103,7 +103,7 @@ func bogoSortInstance(seguir, encontrado chan bool, ints IntVector, res chan Int
 
 func ConcurrentBogoSort(ints IntVector, verbose bool) {
 	keepSearching := true
-	nWorkers := len(ints)
+	nWorkers := 10
 	seguir := make(chan bool)
 	encontrado := make(chan bool)
 	res := make(chan IntVector)
