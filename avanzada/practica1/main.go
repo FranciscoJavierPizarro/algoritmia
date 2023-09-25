@@ -38,9 +38,11 @@ func main() {
 		input = "./datasets/mediumbig.txt"
 		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
 	case "big":
-	default:
 		input = "./datasets/big.txt"
 		functions = []IntVectorFunc{RadixSort, ConcurrentMergeSort, ConcurrentQuickSort}
+	default:
+		input = "./datasets/mediumbig.txt"
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
 	}
 
 	outputFilePath := "medidas.txt"

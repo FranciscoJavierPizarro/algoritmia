@@ -7,7 +7,7 @@ end
 file_name = "random_arrays.txt"
 
 # Array of different lengths
-big_array_lengths = [5, 50, 500, 5000, 10000, 100000, 1000000, 10000000, 100000000]
+big_array_lengths = [5, 50, 500, 5000, 10000, 100000, 1000000, 10000000, 150000000]
 mediumsmall_array_lengths = [5, 50, 500, 5000, 10000, 100000]
 mediumbig_array_lengths = [5, 50, 500, 5000, 10000, 100000, 1000000, 5000000]
 small_array_lengths = [5, 10, 50, 100, 500]
