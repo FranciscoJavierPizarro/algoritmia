@@ -162,6 +162,31 @@ func shuffle(ints IntVector) IntVector {
 	return ints
 }
 
+func findMaxIndex(ints []int) int {
+	maxIndex := 0
+	maxValue := ints[0]
+
+	for i, v := range ints {
+		if v > maxValue {
+			maxIndex = i
+			maxValue = v
+		}
+	}
+
+	return maxIndex
+}
+
+func flip(ints []int, i int) {
+	start := 0
+	for start < i {
+		temp := ints[start]
+		ints[start] = ints[i]
+		ints[i] = temp
+		start++
+		i--
+	}
+}
+
 // //////////////////////////////////////////////////////////////////////////////
 //
 //	HEAP														  			   //

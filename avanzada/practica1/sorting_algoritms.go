@@ -216,10 +216,20 @@ func HeapSort(ints IntVector, verbose bool) {
 	return
 }
 
-func CubeSort(ints IntVector, verbose bool) {
-	result := 1
-	for _, v := range ints {
-		result *= v
+func PancakeSort(ints IntVector, verbose bool) {
+	N := len(ints)
+	currSize := N
+	for currSize > 1 {
+		maxIndex := findMaxIndex(ints[:currSize])
+		if (maxIndex != (currSize - 1)) {
+			flip(ints,maxIndex)
+			flip(ints, currSize - 1)
+		}
+		currSize--
+	}
+
+	if (verbose) {
+		fmt.Println(ints)
 	}
 	return
 }

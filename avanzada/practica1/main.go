@@ -11,20 +11,13 @@ import (
 )
 
 func main() {
-	// Define a boolean flag for verbose mode
 	verb := flag.Bool("v", false, "Enable verbose mode")
 
-	// Parse command line arguments
 	flag.Parse()
 	verbose := *verb
 	if (verbose) {
 		fmt.Println("Vectores cargados.")
 	}
-	// Sample integer vector.
-	// vector := IntVector{1, 2, 3, 4, 5}
-	
-	// Define an array of functors.
-	// functions := []IntVectorFunc{RadixSort, QuickSort, ConcurrentQuickSort, ConcurrentBogoSort, MergeSort, ConcurrentMergeSort, BubbleSort, HeapSort, CubeSort, TreeSort}
 	
 	filePath := "medidas.txt"
 	
@@ -34,7 +27,7 @@ func main() {
 	
 	vectors := ReadVectorsFromFile("./random_arrays.txt")
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	functions := []IntVectorFunc{HeapSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort, ConcurrentQuickSort}
+	functions := []IntVectorFunc{HeapSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort, ConcurrentQuickSort, PancakeSort}
 	// functions := []IntVectorFunc{}
 
 	header := "Size"
