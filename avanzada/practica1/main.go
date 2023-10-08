@@ -1,13 +1,33 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//     Archivo: main.go                                                       //
+//     Fecha de última revisión: 08/10/2023                                   //
+//     Autores: Francisco Javier Pizarro 821259                               //
+//              Jorge Solán Morote   	816259                                //
+//     Comms:                                                                 //
+//           Este archivo contiene el core de la práctica 1 de algoritmia     //
+//           avanzada											  			  //
+//     Use:  																  //
+//			go build main.go auxiliar_funcs.go  sorting_algoritms.go		  //
+// 			go run *.go									  					  //
+//			Lanzar el script ejecutar.sh                                      //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//    IMPORTS 	   		                                                      //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
 package main
 
-// go build main.go auxiliar_funcs.go  sorting_algoritms.go
-// go run *.go
 import (
+	"flag"
 	"fmt"
 	"os"
-	"time"
 	"strings"
-	"flag"
+	"time"
 )
 
 func main() {
@@ -16,7 +36,7 @@ func main() {
 
 	flag.Parse()
 	verbose := *verb
-	if (verbose) {
+	if verbose {
 		fmt.Println("Vectores cargados.")
 	}
 	input := ""
@@ -27,10 +47,10 @@ func main() {
 		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, ConcurrentMergeSort, ConcurrentQuickSort}
 	case "simple":
 		input = "./datasets/small.txt"
-		functions = []IntVectorFunc{RadixSort, ConcurrentBogoSort }
+		functions = []IntVectorFunc{RadixSort, ConcurrentBogoSort}
 	case "medio-small":
 		input = "./datasets/mediumsmall.txt"
-		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort,PancakeSort}
+		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort, BubbleSort, PancakeSort}
 	case "medio-big":
 		input = "./datasets/mediumbig.txt"
 		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
@@ -43,11 +63,11 @@ func main() {
 	}
 
 	outputFilePath := "medidas.txt"
-	
+
 	// Open the file for writing. Create it if it doesn't exist, truncate it if it does.
 	file, _ := os.Create(outputFilePath)
 	defer file.Close()
-	
+
 	vectors := ReadVectorsFromFile(input)
 	// vectors := []IntVector{{43, 29, 51, 21, 74}}
 	// functions := []IntVectorFunc{}
@@ -63,17 +83,17 @@ func main() {
 		timeMeasure = fmt.Sprintf("%d", len(vector))
 		for _, function := range functions {
 			// Measure execution time.
-			if (verbose) {
+			if verbose {
 				fmt.Printf("Function: %s\n", FunctionName(function))
 				fmt.Println(len(vector))
 			}
 
 			start := time.Now()
-			function(vector,verbose)
+			function(vector, verbose)
 			duration := time.Since(start).Milliseconds()
 			timeMeasure += " " + fmt.Sprintf("%d", duration)
 
-			if (verbose) {
+			if verbose {
 				fmt.Printf("Execution Time: %d\n", duration)
 				fmt.Println()
 			}

@@ -1,3 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//     Archivo: auxiliar_funcs.go                                             //
+//     Fecha de última revisión: 08/10/2023                                   //
+//     Autores: Francisco Javier Pizarro 821259                               //
+//              Jorge Solán Morote   	816259                                //
+//     Comms:                                                                 //
+//           Este archivo contiene el core de la práctica 1 de algoritmia     //
+//           avanzada											  			  //
+//																			  //
+////////////////////////////////////////////////////////////////////////////////
+
 package main
 
 import (
@@ -11,10 +23,8 @@ import (
 	"strings"
 )
 
-// Helper function to get the name of a function.
+// Funcion auxiliar para obtener el nombre de una funcion
 func FunctionName(f IntVectorFunc) string {
-	// This is a simple way to get the function name as a string,
-	// but it won't work if the function is an anonymous function.
 	return runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
 }
 
@@ -27,7 +37,7 @@ func ReadVectorsFromFile(fileName string) [][]int {
 
 	var vectors [][]int
 	scanner := bufio.NewScanner(file)
-	const maxBufferSize = 1024 * 1024 * 1024 * 2// 1 GB buffer size
+	const maxBufferSize = 1024 * 1024 * 1024 * 2 // 1 GB buffer size
 	buf := make([]byte, maxBufferSize)
 	scanner.Buffer(buf, maxBufferSize)
 	for scanner.Scan() {
@@ -53,8 +63,8 @@ func ReadVectorsFromFile(fileName string) [][]int {
 	return vectors
 }
 
-func divideInLowersAndGreaters(value int, vec []int) ([]int,[]int) {
-	var lowerEqual,greater []int
+func divideInLowersAndGreaters(value int, vec []int) ([]int, []int) {
+	var lowerEqual, greater []int
 	for _, element := range vec {
 		if element <= value {
 			lowerEqual = append(lowerEqual, element)
@@ -95,6 +105,7 @@ func countingSort(ints IntVector, exp int) IntVector {
 
 func getMax(ints IntVector) int {
 	max := ints[0]
+	// Encontrar el máximo valor del vector de Ints
 	for _, num := range ints {
 		if num > max {
 			max = num
@@ -105,15 +116,14 @@ func getMax(ints IntVector) int {
 
 func concatMultipleSlices(slices []IntVector) IntVector {
 	var totalLen int
-
+	//Obtener la longitd total del vector
 	for _, s := range slices {
 		totalLen += len(s)
 	}
-
+	//Crea un canal por vector
 	result := make(IntVector, totalLen)
 
 	var i int
-
 	for _, s := range slices {
 		i += copy(result[i:], s)
 	}
@@ -193,7 +203,7 @@ func flip(ints []int, i int) {
 //
 // https://pkg.go.dev/container/heap										   //
 // //////////////////////////////////////////////////////////////////////////////
-// An IntHeap is a min-heap of ints.
+
 type IntHeap []int
 
 func (h IntHeap) Len() int           { return len(h) }
@@ -201,8 +211,8 @@ func (h IntHeap) Less(i, j int) bool { return h[i] < h[j] }
 func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
 func (h *IntHeap) Push(x any) {
-	// Push and Pop use pointer receivers because they modify the slice's length,
-	// not just its contents.
+	// Push y Pop usan punteros porque modifican la longitud del slice,
+	// no solo su contenido.
 	*h = append(*h, x.(int))
 }
 
@@ -242,13 +252,16 @@ func (t *Tree) insert(data int) {
 
 // Node
 func (n *Node) insert(data int) {
+	//Si el nuevo valor es menor que el nodo donde está
 	if data <= n.key {
+		//Hijo izquierdo
 		if n.left == nil {
 			n.left = &Node{key: data}
 		} else {
 			n.left.insert(data)
 		}
 	} else {
+		//Hijo derecho
 		if n.right == nil {
 			n.right = &Node{key: data}
 		} else {
@@ -257,14 +270,15 @@ func (n *Node) insert(data int) {
 	}
 }
 
-func postOrder(n *Node, verbose bool) {
+func inOrder(n *Node, verbose bool) {
+	//Recorre en Inorder el árbol
 	if n == nil {
 		return
 	} else {
-		postOrder(n.left,verbose)
-		if (verbose) {
+		inOrder(n.left, verbose)
+		if verbose {
 			fmt.Print(n.key, " ")
 		}
-		postOrder(n.right,verbose)
+		inOrder(n.right, verbose)
 	}
 }
