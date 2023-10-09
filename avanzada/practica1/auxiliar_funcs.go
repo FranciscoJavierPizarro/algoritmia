@@ -5,8 +5,8 @@
 //     Autores: Francisco Javier Pizarro 821259                               //
 //              Jorge Solán Morote   	816259                                //
 //     Comms:                                                                 //
-//           Este archivo contiene el core de la práctica 1 de algoritmia     //
-//           avanzada											  			  //
+//           Este archivo contiene funciones auxiliares de la práctica 1 	  //
+//			 de algoritmia avanzada								  			  //
 //																			  //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -28,6 +28,7 @@ func FunctionName(f IntVectorFunc) string {
 	return runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
 }
 
+// Funcion auxiliar para cargar varios vectores desde un fichero de texto dado su nombre
 func ReadVectorsFromFile(fileName string) [][]int {
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -63,6 +64,7 @@ func ReadVectorsFromFile(fileName string) [][]int {
 	return vectors
 }
 
+// Funcion auxiliar que dado un valor y un vector devuelve dos vectores cada uno contiene los menoresIguales y los mayores respectivamente
 func divideInLowersAndGreaters(value int, vec []int) ([]int, []int) {
 	var lowerEqual, greater []int
 	for _, element := range vec {
@@ -103,6 +105,7 @@ func countingSort(ints IntVector, exp int) IntVector {
 	return output
 }
 
+// Funcion auxiliar para obtener el valor máximo de un vector
 func getMax(ints IntVector) int {
 	max := ints[0]
 	// Encontrar el máximo valor del vector de Ints
@@ -114,23 +117,7 @@ func getMax(ints IntVector) int {
 	return max
 }
 
-func concatMultipleSlices(slices []IntVector) IntVector {
-	var totalLen int
-	//Obtener la longitd total del vector
-	for _, s := range slices {
-		totalLen += len(s)
-	}
-	//Crea un canal por vector
-	result := make(IntVector, totalLen)
-
-	var i int
-	for _, s := range slices {
-		i += copy(result[i:], s)
-	}
-
-	return result
-}
-
+// Funcion auxiliar para mezclar dos vectores ordenados
 func merge(A, B IntVector) IntVector {
 	NA, NB := len(A), len(B)
 	i, j := 0, 0
@@ -153,6 +140,7 @@ func merge(A, B IntVector) IntVector {
 	return mergedVec
 }
 
+// Funcion auxiliar para comprobar si un vector esta ordenado
 func isSorted(A IntVector) bool {
 	N := len(A)
 	for i := 1; i < N; i++ {
@@ -163,6 +151,7 @@ func isSorted(A IntVector) bool {
 	return true
 }
 
+// Funcion auxiliar para ordenar de forma aleatoria un vector
 func shuffle(ints IntVector) IntVector {
 	n := len(ints)
 	for i := n - 1; i > 0; i-- {
@@ -172,6 +161,7 @@ func shuffle(ints IntVector) IntVector {
 	return ints
 }
 
+// Funcion auxiliar para obtener el indice del maximo elemento de un vector
 func findMaxIndex(ints []int) int {
 	maxIndex := 0
 	maxValue := ints[0]
@@ -186,6 +176,8 @@ func findMaxIndex(ints []int) int {
 	return maxIndex
 }
 
+// Funcion auxiliar para "flipear" los elementos de un vector ->
+// 0 1 2 3 5 --> 5 3 2 1 0
 func flip(ints []int, i int) {
 	start := 0
 	for start < i {

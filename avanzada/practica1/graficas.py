@@ -1,3 +1,15 @@
+##############################################################################
+#                                                                            #
+#     Archivo: graficas.py                                                   #
+#     Fecha de última revisión: 08/10/2023                                   #
+#     Autores: Francisco Javier Pizarro 821259                               #
+#              Jorge Solán Morote   	816259                               #
+#     Comms:                                                                 #
+#           Este script se emplea de forma manual para generar las           #
+#           gráficas empleadas en la memoria.               	  			 #
+#																			 #
+##############################################################################
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.ticker as ticker

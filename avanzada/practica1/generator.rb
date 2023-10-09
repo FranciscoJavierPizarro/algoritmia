@@ -1,3 +1,15 @@
+##############################################################################
+#                                                                            #
+#     Archivo: generator.rb                                                  #
+#     Fecha de última revisión: 08/10/2023                                   #
+#     Autores: Francisco Javier Pizarro 821259                               #
+#              Jorge Solán Morote   	816259                                 #
+#     Comms:                                                                 #
+#           Este script se emplea de forma manual para generar los           #
+#           datasets aleatorios que ordena el programa principal             #
+#																			                                       #
+##############################################################################
+
 # Define un método para generar un vector random de una longitud dada
 def generate_random_array(length)
   Array.new(length) { rand(1..1000000) } # Cambia el rango como sea necesario

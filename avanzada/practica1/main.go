@@ -14,12 +14,6 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-//    IMPORTS 	   		                                                      //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
-
 package main
 
 import (
@@ -31,6 +25,7 @@ import (
 )
 
 func main() {
+	// Parseo de flags de ejecucción
 	verb := flag.Bool("v", false, "Enable verbose mode")
 	dataset := flag.String("dataset", "medio", "Dataset to use (simple, medioParcialmenteOrdenado ,medio, grande)")
 
@@ -62,16 +57,15 @@ func main() {
 		functions = []IntVectorFunc{HeapSort, TreeSort, RadixSort, MergeSort, QuickSort}
 	}
 
+	
+	// Gestión del fichero de salida
 	outputFilePath := "medidas.txt"
-
-	// Open the file for writing. Create it if it doesn't exist, truncate it if it does.
 	file, _ := os.Create(outputFilePath)
 	defer file.Close()
-
+	// Carga de los vectores de entrada
 	vectors := ReadVectorsFromFile(input)
-	// vectors := []IntVector{{43, 29, 51, 21, 74}}
-	// functions := []IntVectorFunc{}
 
+	// Escritura de la cabezera del fichero de salida
 	header := "Size"
 	for _, function := range functions {
 		header += " " + strings.Split(FunctionName(function), ".")[1]
@@ -79,6 +73,9 @@ func main() {
 	header += "\n"
 	file.Write([]byte(header))
 	timeMeasure := ""
+
+	// Para cada vector del dataset, se ordena empleando cada una de las funciones asociadas al dataset
+	// se mide el tiempo de cada función y se escribe en el fichero de salida.
 	for _, vector := range vectors {
 		timeMeasure = fmt.Sprintf("%d", len(vector))
 		for _, function := range functions {

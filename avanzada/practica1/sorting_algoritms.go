@@ -5,7 +5,7 @@
 //     Autores: Francisco Javier Pizarro 821259                               //
 //              Jorge Solán Morote   	816259                                //
 //     Comms:                                                                 //
-//           Este archivo contiene todos los algortimos de ordenación		  //
+//          Este archivo contiene todos los algortimos de ordenación		  //
 //			que probaremos en la práctica							  		  //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
