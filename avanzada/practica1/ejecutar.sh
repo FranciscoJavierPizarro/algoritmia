@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 echo "generando datasets aleatorios"
-ruby ./generator.rb
+/usr/bin/ruby ./generator.rb
 
 echo "datasets generados"
 echo "generando ejecutable del programa principal"
 
-go build main.go auxiliar_funcs.go  sorting_algoritms.go
+/usr/local/go/bin/go build main.go auxiliar_funcs.go  sorting_algoritms.go
 
 flags=("real" "medio-small" "medio-big")
 
