@@ -1,3 +1,4 @@
+module LatinSquare where
 import SAT.MiniSat
 -- cabal install minisat-solver
 import qualified Data.Map as Map
@@ -73,18 +74,18 @@ getInt = do
     input <- getLine
     return (read input)
 
--- | The main function.
-main :: IO ()
-main = do
-  putStrLn "Dime un numero pa:"
-  num <- getInt
-  let s = latinSquare_create num
-  case resolver_latinSquare num s of
-    [] -> do
-      putStrLn "No solution."
-    [h] -> do
-      putStrLn "Unique solution:"
-      putStr (mostrar_latinSquare h num)
-    h:t -> do
-      putStrLn "Non-unique solution:"
-      putStr (mostrar_latinSquare h num)
+-- -- | The main function.
+-- main :: IO ()
+-- main = do
+--   putStrLn "Dime un numero pa:"
+--   num <- getInt
+--   let s = latinSquare_create num
+--   case resolver_latinSquare num s of
+--     [] -> do
+--       putStrLn "No solution."
+--     [h] -> do
+--       putStrLn "Unique solution:"
+--       putStr (mostrar_latinSquare h num)
+--     h:t -> do
+--       putStrLn "Non-unique solution:"
+--       putStr (mostrar_latinSquare h num)
