@@ -24,7 +24,7 @@ indstep p = forAllInt (jump p)
 forAllInt :: Predicate -> Bool
 forAllInt p = go 0
   where go n | n == 50 = True
-             | otherwise     = p n && go (succ n)
+             | otherwise = p n && go (succ n)
 
 isLatinSquareSolved :: [LatinSquare] -> Int -> Bool
 isLatinSquareSolved latinSquareSols n = 

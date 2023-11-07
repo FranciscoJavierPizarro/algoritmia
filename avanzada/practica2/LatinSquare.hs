@@ -6,12 +6,28 @@ import Data.Map (Map)
 import Data.List
 import Data.Char
 import System.IO
+
+import Data.List (genericLength)
+import Data.Maybe (listToMaybe)
+import Data.Function (on)
+import Data.Ord (comparing)
 -- ghc latinSquare.hs -package minisat-solver -O2 && ./latinSquare
 
 data Celda = Celda Int Int Int
             deriving (Eq, Ord, Show)
 
 type LatinSquare = Map (Int, Int) Int
+
+getLatinSquareDimensions :: LatinSquare -> Int
+getLatinSquareDimensions square = maximum [maxRow, maxCol, maxVal]
+  where
+    rows = map fst (Map.keys square)
+    cols = map snd (Map.keys square)
+    values = Map.elems square
+    maxRow = maximum rows
+    maxCol = maximum cols
+    maxVal = maximum values
+
 
 celda :: Int -> Int -> Int -> Formula Celda
 celda i j n = Var (Celda i j n)
@@ -43,20 +59,34 @@ mostrar_latinSquare s n =
 latinSquare_create :: Int -> LatinSquare
 latinSquare_create n = Map.fromList [ ((i,j),0) | i <- [0..(n-1)], j <- [0..(n-1)] ]
 
-latinSquare_de_lista :: [Int] -> LatinSquare
-latinSquare_de_lista xs =
-  Map.fromList [ ((i,j),n) | ((i,j),n) <- zip coords xs, 1 <= n && n <= 9 ]
-  where
-    coords = [ (i,j) | i <- [1..9], j <- [1..9] ]
+-- latinSquare_de_lista :: [Int] -> LatinSquare
+-- latinSquare_de_lista xs =
+--   Map.fromList [ ((i,j),n) | ((i,j),n) <- zip coords xs, 1 <= n && n <= 9 ]
+--   where
+--     coords = [ (i,j) | i <- [1..9], j <- [1..9] ]
 
-leer_latinSquare :: String -> LatinSquare
-leer_latinSquare s = latinSquare_de_lista (aux s)
+latinSquare_de_lista :: [Int] -> LatinSquare
+latinSquare_de_lista xs = Map.fromList [ ((i, j), n) | ((i, j), n) <- zip coords xs, n >= 1, n <= len ]
   where
-    aux [] = []
-    aux (' ':' ':cs) = 0 : aux cs
-    aux (c:cs)
-      | '0' <= c && c <= '9' = (ord c - ord '0') : aux cs
-      | otherwise = aux cs
+    len = floor (sqrt (fromIntegral (length xs)))
+    coords = [(i, j) | i <- [1..len], j <- [1..len]]
+
+-- leer_latinSquare :: String -> LatinSquare
+-- leer_latinSquare s = latinSquare_de_lista (aux s)
+--   where
+--     aux [] = []
+--     aux ('*':cs) = 0 : aux cs
+--     aux (c:cs)
+--       | '0' <= c && c <= '9' = (ord c - ord '0') : aux cs
+--       | otherwise = aux cs
+
+replaceAsterisks :: String -> LatinSquare
+replaceAsterisks input = latinSquare_de_lista $ map replaceChar (filter (not . isSpace) input)
+  where
+    replaceChar c
+      | isDigit c = digitToInt c  -- Convert digit character to an integer
+      | c == '*'  = 0            -- Replace '*' with 0
+      | otherwise = error "Invalid character in the input"
 
 -- predefined = latinSquare_de_lista
 --   [*,*,*,*,1,4,*,9,*,
@@ -73,19 +103,3 @@ getInt :: IO Int
 getInt = do
     input <- getLine
     return (read input)
-
--- -- | The main function.
--- main :: IO ()
--- main = do
---   putStrLn "Dime un numero pa:"
---   num <- getInt
---   let s = latinSquare_create num
---   case resolver_latinSquare num s of
---     [] -> do
---       putStrLn "No solution."
---     [h] -> do
---       putStrLn "Unique solution:"
---       putStr (mostrar_latinSquare h num)
---     h:t -> do
---       putStrLn "Non-unique solution:"
---       putStr (mostrar_latinSquare h num)
