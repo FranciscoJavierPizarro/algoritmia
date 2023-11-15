@@ -1,6 +1,8 @@
 import LatinSquare
 import Data.List.Split (splitOn)
 import System.IO
+import System.CPUTime
+--ghc testDataset.hs -package minisat-solver -package split -O2
 -- -- | The main function.
 processPart :: String -> IO ()
 processPart part = do
@@ -20,9 +22,13 @@ processPart part = do
       putStrLn "Non-unique solution:"
       putStr (mostrar_latinSquare h num)
 
-filename = "test.txt"
+filename = "latin_squares.txt"
 main :: IO ()
 main = do
   contents <- readFile filename
   let contents_parts = splitOn "#" contents
+  start <- getCPUTime
   mapM_ processPart contents_parts
+  end <- getCPUTime
+  let diff = fromIntegral(end - start) / (10^12) :: Float
+  putStrLn (show diff)
