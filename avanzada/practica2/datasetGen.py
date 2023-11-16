@@ -1,3 +1,15 @@
+##############################################################################
+#                                                                            #
+#     Archivo: datasetGen.py                                                 #
+#     Fecha de última revisión: 16/11/2023                                   #
+#     Autores: Francisco Javier Pizarro 821259                               #
+#              Jorge Solán Morote   	816259                               #
+#     Comms:                                                                 #
+#           Script auxiliar que genera un dataset de tamañon N y densidad d  #
+#           Dicho dataset va a ser un latinSquare correcto    	  			 #
+#																			 #
+##############################################################################
+
 import random
 import itertools
 

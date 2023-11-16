@@ -1,3 +1,14 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--    Archivo: testDataset.hs                                                 --
+--    Fecha de última revisión: 16/11/2023                                    --
+--    Autores: Francisco Javier Pizarro 821259                                --
+--             Jorge Solán Morote   	816259                                  --
+--    Comms:                                                                  --
+--          Este archivo carga latinSquares desde un fichero y los resuelve   --
+--          Adicionalmente devuelve el tiempo total empleado                  --
+--                                                                            --
+--------------------------------------------------------------------------------
 import LatinSquare
 import Data.List.Split (splitOn)
 import System.IO

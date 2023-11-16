@@ -1,4 +1,15 @@
 {-# LANGUAGE BangPatterns #-}
+--------------------------------------------------------------------------------
+--                                                                            --
+--    Archivo: inducProof.hs                                                  --
+--    Fecha de última revisión: 16/11/2023                                    --
+--    Autores: Francisco Javier Pizarro 821259                                --
+--             Jorge Solán Morote   	816259                                  --
+--    Comms:                                                                  --
+--          Este archivo contiene la demostración por inducción en HS         --
+--          Usa esta sobre el solver de LatinSquare para N € 1,50             --
+--                                                                            --
+--------------------------------------------------------------------------------
 import Data.Map
 import Data.List
 import LatinSquare

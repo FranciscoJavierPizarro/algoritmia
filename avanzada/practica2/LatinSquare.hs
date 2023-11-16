@@ -1,3 +1,15 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--    Archivo: LatinSquare.hs                                                 --
+--    Fecha de última revisión: 16/11/2023                                    --
+--    Autores: Francisco Javier Pizarro 821259                                --
+--             Jorge Solán Morote   	816259                                  --
+--    Comms:                                                                  --
+--          Este archivo contiene la implementación del LatinSquare empleando --
+--          MiniSat para resolverlo, ofrece funciones para cargarlo desde     --
+--          un string, para crearlo sabiendo su N y para resolverlo           --
+--                                                                            --
+--------------------------------------------------------------------------------
 module LatinSquare where
 import SAT.MiniSat
 -- cabal install minisat-solver
@@ -59,45 +71,19 @@ mostrar_latinSquare s n =
 latinSquare_create :: Int -> LatinSquare
 latinSquare_create n = Map.fromList [ ((i,j),0) | i <- [0..(n-1)], j <- [0..(n-1)] ]
 
--- latinSquare_de_lista :: [Int] -> LatinSquare
--- latinSquare_de_lista xs =
---   Map.fromList [ ((i,j),n) | ((i,j),n) <- zip coords xs, 1 <= n && n <= 9 ]
---   where
---     coords = [ (i,j) | i <- [1..9], j <- [1..9] ]
-
 latinSquare_de_lista :: [Int] -> LatinSquare
 latinSquare_de_lista xs = Map.fromList [ ((i, j), n) | ((i, j), n) <- zip coords xs, n >= 1, n <= len ]
   where
     len = floor (sqrt (fromIntegral (length xs)))
     coords = [(i, j) | i <- [1..len], j <- [1..len]]
 
--- leer_latinSquare :: String -> LatinSquare
--- leer_latinSquare s = latinSquare_de_lista (aux s)
---   where
---     aux [] = []
---     aux ('*':cs) = 0 : aux cs
---     aux (c:cs)
---       | '0' <= c && c <= '9' = (ord c - ord '0') : aux cs
---       | otherwise = aux cs
-
 replaceAsterisks :: String -> LatinSquare
 replaceAsterisks input = latinSquare_de_lista $ map replaceChar (filter (not . isSpace) input)
   where
     replaceChar c
-      | isDigit c = digitToInt c  -- Convert digit character to an integer
-      | c == '*'  = 0            -- Replace '*' with 0
+      | isDigit c = digitToInt c 
+      | c == '*'  = 0
       | otherwise = error "Invalid character in the input"
-
--- predefined = latinSquare_de_lista
---   [*,*,*,*,1,4,*,9,*,
---    *,4,7,*,*,2,*,*,8,
---    *,6,*,*,*,9,2,*,*,
---    *,*,*,*,*,*,7,6,9,
---    7,*,*,*,*,*,*,*,3,
---    5,8,6,*,*,*,*,*,*,
---    *,*,8,2,*,*,*,3,*,
---    6,*,*,5,*,*,9,7,*,
---    *,7,*,1,4,*,*,*,*]
 
 getInt :: IO Int
 getInt = do
