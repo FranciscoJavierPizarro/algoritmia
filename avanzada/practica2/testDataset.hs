@@ -7,7 +7,7 @@
 --    Comms:                                                                  --
 --          Este archivo carga latinSquares desde un fichero y los resuelve   --
 --          Adicionalmente devuelve el tiempo total empleado                  --
---                                                                            --
+--          ghc testDataset.hs -package minisat-solver -package split -O2     --
 --------------------------------------------------------------------------------
 import LatinSquare
 import Data.List.Split (splitOn)

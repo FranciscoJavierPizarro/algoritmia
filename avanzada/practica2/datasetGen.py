@@ -82,9 +82,10 @@ def generate_dataset(size,density,nOfSquares):
     write_squares_to_file(modified[:nOfSquares],"latin_squares.txt")
 
 if __name__ == "__main__":
-    size = 3 
+    size = 8 
     all_squares = generate_all_latin_squares(size)
     modified = modify_density_in_squares(all_squares, 0.5)
     print_latin_squares(modified)
-    write_squares_to_file(modified,"latin_squares.txt")
+    random.shuffle(modified)
+    write_squares_to_file(modified[:20],"latin_squares.txt")
     

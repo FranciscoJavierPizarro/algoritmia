@@ -8,7 +8,7 @@
 --    Comms:                                                                  --
 --          Este archivo contiene la demostración por inducción en HS         --
 --          Usa esta sobre el solver de LatinSquare para N € 1,50             --
---                                                                            --
+--          ghc inducProof.hs -package minisat-solver  -eventlog -O2          --
 --------------------------------------------------------------------------------
 import Data.Map
 import Data.List
