@@ -1,16 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"bufio"
-	"strings"
+	"fmt"
 	"math/rand"
+	"os"
+	"sort"
+	"strings"
 	"time"
 )
 
 type Road struct {
-	u, v       int
+	u, v          int
 	tuv, puv, pvu float64
 }
 
@@ -29,6 +30,7 @@ func atof(s string) float64 {
 	fmt.Sscanf(s, "%f", &res)
 	return res
 }
+
 //////////////////////////////////////////
 //			FUNCIONES PRINCIPALES	   //
 /////////////////////////////////////////
@@ -43,7 +45,6 @@ func buscarCaminos(X int, roads []Road) []Road {
 	}
 	return result
 }
-
 
 func selectRandomPath(X int, roads []Road) (int, float64) {
 	var auxRoads []Road
@@ -64,7 +65,7 @@ func selectRandomPath(X int, roads []Road) (int, float64) {
 	for i := 0; i < N; i++ {
 		randomNumber -= possiblities[i]
 		if randomNumber <= 0 {
-			auxResult = auxRoads[i] 
+			auxResult = auxRoads[i]
 			break
 		}
 	}
@@ -77,18 +78,27 @@ func selectRandomPath(X int, roads []Road) (int, float64) {
 	return result, auxResult.tuv
 }
 
-
-func simular(X,C int, roads []Road) float64 {
+func simular(X, C int, roads []Road) float64 {
 	var auxt float64
 	currentInter := X
 	t := 0.0
 	var posiblesCarreteras []Road
-	for currentInter !=C {
-		posiblesCarreteras = buscarCaminos(currentInter,roads)
-		currentInter, auxt = selectRandomPath(currentInter,posiblesCarreteras)
+	for currentInter != C {
+		posiblesCarreteras = buscarCaminos(currentInter, roads)
+		currentInter, auxt = selectRandomPath(currentInter, posiblesCarreteras)
 		t += auxt
 	}
 	return t
+}
+
+func bootstrap(N int, vec []float64) float64 {
+	res := 0.0
+	for i := 0; i < N; i++ {
+		random := rand.Intn(N)
+		res += vec[random]
+	}
+	res = res / float64(N)
+	return res
 }
 
 /////////////////////////////////////////
@@ -97,6 +107,8 @@ func simular(X,C int, roads []Road) float64 {
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+	Nsimulaciones := 500
+	Nboostraps := 50
 	file, _ := os.Open("example.txt")
 	defer file.Close()
 
@@ -134,9 +146,33 @@ func main() {
 		fmt.Printf("u: %d, v: %d, tuv: %f, puv: %f, pvu: %f\n", road.u, road.v, road.tuv, road.puv, road.pvu)
 	}
 
+	var tAlist, tBlist []float64
+	OA, OB := 0.0, 0.0
+	for i := 0; i < Nsimulaciones; i++ {
 
-	tA := simular(A,C,roads)
-	tB := simular(B,C,roads)
-	fmt.Println(tA,tB)
+		//generar mapa aleatorio aqui :D
+		tA := simular(A, C, roads)
+		tB := simular(B, C, roads)
+		tBlist = append(tBlist, tB)
+		tAlist = append(tAlist, tA)
+		OA += tA
+		OB += tB
+	}
+	OA = OA / float64(Nsimulaciones)
+	OB = OB / float64(Nsimulaciones)
+
+	var boostrapsA, boostrapsB []float64
+	for i := 0; i < Nboostraps; i++ {
+		boostrapsA = append(boostrapsA, bootstrap(Nsimulaciones, tAlist))
+		boostrapsB = append(boostrapsB, bootstrap(Nsimulaciones, tBlist))
+	}
+	sort.Float64s(boostrapsA)
+
+	LA := 2*OA - (boostrapsA[Nboostraps/10*9]+boostrapsA[(Nboostraps/10*9)+1])/2
+	RA := 2*OA - (boostrapsA[Nboostraps/10]+boostrapsA[(Nboostraps/10)+1])/2
+	fmt.Println(LA, RA)
+
+	LB := 2*OB - (boostrapsB[Nboostraps/10*9]+boostrapsB[(Nboostraps/10*9)+1])/2
+	RB := 2*OB - (boostrapsB[Nboostraps/10]+boostrapsB[(Nboostraps/10)+1])/2
+	fmt.Println(LB, RB)
 }
-
