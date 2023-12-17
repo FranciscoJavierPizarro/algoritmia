@@ -1,3 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//     Archivo: main.go                                                       //
+//     Fecha de última revisión: 17/12/2023                                   //
+//     Autores: Francisco Javier Pizarro 821259                               //
+//              Jorge Solán Morote   	816259                                //
+//     Comms:                                                                 //
+//           Este archivo contiene el core de la práctica 3 de algoritmia     //
+//           avanzada											  			  //
+//     Use:  																  //
+//			go build main.go && ./main										  //
+// 			go run main.go					                                  //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 package main
 
 import (

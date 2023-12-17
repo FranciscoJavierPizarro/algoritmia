@@ -1,3 +1,14 @@
+##############################################################################
+#                                                                            #
+#     Archivo: generator.py                                                  #
+#     Fecha de última revisión: 17/12/2023                                   #
+#     Autores: Francisco Javier Pizarro 821259                               #
+#              Jorge Solán Morote   	816259                               #
+#     Comms:                                                                 #
+#           Script auxiliar que genera un grafo conexo que sigue el formato	 #
+#           deseado en la p3 de alg avz.                                     #
+#																			 #
+##############################################################################
 import random
 import networkx as nx
 import matplotlib.pyplot as plt
