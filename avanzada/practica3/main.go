@@ -127,7 +127,7 @@ func bootstrap(N int, vec []float64) float64 {
 /////////////////////////////////////////
 
 func main() {
-	Nsimulaciones := 300
+	Nsimulaciones := 500
 	Nboostraps := 50
 	simulationOutputsChannel := make(chan [2]float64)
 	go func(Nsimulaciones,Nboostraps int, simulationOutputsChannel chan [2]float64) {
